@@ -25,7 +25,7 @@
         </v-list>
       </v-toolbar>
       <v-list>
-        <template v-if="user.status === 2">
+        <template >
           <v-list-tile @click="goTo('/app')" class="ma-1" :style="activeRoute('Dashboard')">
             <v-list-tile-action>
               <v-tooltip top>
@@ -51,7 +51,7 @@
               <v-list-tile-title class="body-1 font-weight-light">Licenses</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile
+          <!-- <v-list-tile
             @click="goTo('/app/certificates')"
             class="ma-1"
             :style="activeRoute('Certificates')"
@@ -66,8 +66,8 @@
             <v-list-tile-content>
               <v-list-tile-title class="body-1 font-weight-light">Certificates</v-list-tile-title>
             </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile
+          </v-list-tile> -->
+          <!-- <v-list-tile
             @click="goTo('/app/notification')"
             class="ma-1"
             :style="activeRoute('Notifications')"
@@ -82,7 +82,7 @@
             <v-list-tile-content>
               <v-list-tile-title class="body-1 font-weight-light">Product Notification</v-list-tile-title>
             </v-list-tile-content>
-          </v-list-tile>
+          </v-list-tile> -->
 
           <v-list-tile @click="goTo('/app/payments')" class="ma-1" :style="activeRoute('Payments')">
             <v-list-tile-action>

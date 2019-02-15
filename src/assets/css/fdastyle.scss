@@ -3,6 +3,10 @@
 @import 'variables';
 @import 'mixins';
 
+.v-sheet{
+  border-radius: 5px
+}
+
 .v-card {
     // background: linear-gradient(180deg, #e6e6e6, white);
     border-radius: 8px !important;

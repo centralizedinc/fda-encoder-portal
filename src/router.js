@@ -80,11 +80,21 @@ var router = new Router({
     {
       path: '/app',
       component: UserLayout,
-      beforeEnter: isActiveSession,
+      // beforeEnter: isActiveSession,
       children: [{
           path: '',
           name: 'Dashboard',
-          component: () => import('@/views/app/UserPortfolio.vue'),
+          component: () => import('@/views/app/Dashboard.vue'),
+        },
+        {
+          path: 'licenses',
+          name: 'Licenses',
+          component: () => import('@/views/app/licenses/Licenses.vue'), 
+        },
+        {
+          path: 'licenses/new',
+          name: 'License Application Form',
+          component: () => import('@/views/app/licenses/apply/ApplicationForm.vue'), 
         }
       ]
 

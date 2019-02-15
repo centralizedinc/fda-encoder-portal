@@ -112,27 +112,28 @@ export default {
   methods: {
     login() {
       this.loading = true;
-      this.$store.dispatch('LOGIN', this.credentials)
-        .then((res)=>{          
-          this.loading = false;
-          if(res.isMatch){
-            console.log("RESULT: " + JSON.stringify(res))
-            if(res.user.status === 2){
-              this.$notify({message:'Welcome ' + res.user.username + "!", color:'success', icon:'error_outline'})
-            }else{
-              this.$notify({message:'Welcome ' + res.user.username + "! You have limited access since your account is not yet activated.", color:'warning', icon:'error_outline'})
-            }
-            this.$router.push("/app");                        
-          }else{
-            this.credentials.password = "";
-            this.$notify({message:'Invalid User Credentials', color:'warning', icon:'error_outline'})
-          }
+      this.$router.push("/app");  
+      // this.$store.dispatch('LOGIN', this.credentials)
+      //   .then((res)=>{          
+      //     this.loading = false;
+      //     if(res.isMatch){
+      //       console.log("RESULT: " + JSON.stringify(res))
+      //       if(res.user.status === 2){
+      //         this.$notify({message:'Welcome ' + res.user.username + "!", color:'success', icon:'error_outline'})
+      //       }else{
+      //         this.$notify({message:'Welcome ' + res.user.username + "! You have limited access since your account is not yet activated.", color:'warning', icon:'error_outline'})
+      //       }
+      //       this.$router.push("/app");                        
+      //     }else{
+      //       this.credentials.password = "";
+      //       this.$notify({message:'Invalid User Credentials', color:'warning', icon:'error_outline'})
+      //     }
           
-        })
-        .catch((err)=>{
-          this.loading = false;
-          this.$notify({message:'Oops! Something went wrong. Please try again.', color:'error', icon:'error_outline'})
-        })
+      //   })
+      //   .catch((err)=>{
+      //     this.loading = false;
+      //     this.$notify({message:'Oops! Something went wrong. Please try again.', color:'error', icon:'error_outline'})
+      //   })
     },
     signup(){
       this.$router.push("/signup")

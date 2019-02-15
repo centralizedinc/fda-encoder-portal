@@ -1,9 +1,37 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12>
-      <div class="headline">Overview</div>
-    </v-flex>
-
+    <v-flex xs6 pa-3>          
+      <v-card>
+      <v-sheet
+        class="v-sheet--offset mx-auto"
+        style="background: linear-gradient(360deg, rgb(15, 144, 26) 0%, rgb(151, 199, 110) 100%)"
+        elevation="12"
+        max-width="calc(100% - 32px)"
+      >
+        <v-sparkline
+          :labels="labels"
+          :value="value"
+          color="white"
+          line-width="2"
+          smooth="3"
+          padding="16"
+        ></v-sparkline>
+      </v-sheet>
+    
+    <v-card-text class="pt-0">
+      <div class="title font-weight-light mb-2">License Applications</div>
+      <div class="subheading font-weight-light grey--text">As of {{formatDate(new Date())}}</div>
+      <v-divider class="my-2"></v-divider>
+      <v-icon
+        class="mr-2"
+        small
+      >
+        time
+      </v-icon>
+      <span class="caption grey--text font-weight-light">last registration 26 minutes ago</span>
+    </v-card-text>
+  </v-card>
+</v-flex>
     <v-flex xs12 md6 lg3 pa-2>
       <v-card>
         <v-tooltip top>
@@ -281,6 +309,26 @@ import DashboardCard from "@/components/DashboardCards";
 export default {
   components: { DashboardCard },
   data: () => ({
+    labels: [
+        '12am',
+        '3am',
+        '6am',
+        '9am',
+        '12pm',
+        '3pm',
+        '6pm',
+        '9pm'
+      ],
+      value: [
+        200,
+        675,
+        410,
+        390,
+        310,
+        460,
+        250,
+        240
+      ],
     date2: new Date().toISOString().substr(0, 10),
     items: [
       { header: "Today" },
