@@ -68,6 +68,16 @@ var actions = {
                 console.log("actions save licenses error: " + JSON.stringify(err))
             }          
         })
+    },
+
+    RETRIEVE_RATES(context, app_details){
+        return new PaymentAPI(context.rootState.user_session.token)
+                    .retrieveRates(app_details)
+    },
+
+    SUBMIT_PAYMENT(context, payment){
+        return new PaymentAPI(context.rootState.user_session.token)
+                    .submitPayment(payment);
     }
     
 }

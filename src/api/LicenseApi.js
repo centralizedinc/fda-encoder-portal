@@ -34,14 +34,41 @@ export default class LicenseAPI {
         })
     }
 
-    saveLicenses(licenses, cb) {
-        console.log('actions save licenses api: ' + JSON.stringify(licenses))
-        axios.post('lto-api/', licenses).then((result) => {
-            console.log("post licenses: " + JSON.stringify(result.data.model));
-            cb(result.data.model)
-        }).catch(err => {
-            console.log('##########error save saveLicenses: ' + JSON.stringify(err))
-            cb(null, err)
+    saveLicenses(data) {
+        var saved_license = {};
+        var lic_case = {}
+        return new Promise((resolve, reject)=>{
+            axios.post('lto-api/encoded', data.license)
+            .then(result1=>{
+                console.log("RESULT SAVING LICENSE: " + JSON.stringify(result1.data))
+                if(result1.data.success){
+                    lic_case = result1.data;
+                    saved_license = result1.data.model.license;
+                    return axios.post('documents/uploads?account_id=' + saved_license.case_no, data.upload)
+                }else{
+                    resolve(result1.data)
+                }            
+            })
+            .then(result2=>{
+                console.log("RESULT UPLOADING FILES: " + JSON.stringify(result2.data))
+                var files = result2.data.model
+                saved_license.uploaded_files = files;
+                if(result2.data.success){
+                    return axios.post('lto-api/'+ saved_license._id, saved_license)
+                }else{
+                    resolve(result2.data)
+                }
+                
+            })
+            .then(result3=>{
+                console.log("RESULT UPDATING LICENSE: " + JSON.stringify(result3.data)) 
+                lic_case.license = result3.data.model;    
+                resolve(lic_case)
+                
+            })
+            .catch(err=>{
+                reject(err)
+            })
         })
     }
 

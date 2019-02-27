@@ -57,5 +57,43 @@ export default class PaymentAPI {
          })
     }
 
+    retrieveRates(app_details){
+        return axios.post('payments/rates/compute', app_details)
+    }
+
+    submitPayment(payment){
+        console.log('PAYMENTS: '+JSON.stringify(payment))
+        var payment_details = {};
+        return new Promise((resolve, reject)=>{
+            axios.post('payments/cashier', payment)
+            .then(result1=>{
+                console.log('PAYMENT_RESULT: ' + JSON.stringify(result1.data))
+                if(result1.data.success){
+                    payment_details = result1.data;
+                    var details = {
+                        case_id: payment.transaction_details.case_id,
+                        status:0,
+                        remarks: payment.transaction_details.order_payment.remarks
+                    }
+                    console.log('DETAILS: '+JSON.stringify(details))
+                    return axios.post('lto-api/case/evaluate', details)
+                }else{
+                    resolve(result1.data)
+                }
+            })
+            .then(result2=>{
+                if(result2.data.success){
+                    resolve(payment_details)
+                }
+                resolve(result2.data)
+            })
+            .catch(err=>{
+                console.log('ERROR: ' + err)
+                reject(err)
+            })
+        })
+        
+    }
+
 
 }

@@ -123,7 +123,12 @@
     @include notifications-color('purple', $brand-primary);
   }
 
-  .fab-container {
+  .fab-container-top {
+    position: fixed;
+    top: 10%;
+    right: 1%;
+  }
+  .fab-container-bottom {
     position: fixed;
     bottom: 10%;
     right: 1%;

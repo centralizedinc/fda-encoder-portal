@@ -1,133 +1,116 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs12 pa-3>                    
-        <v-form>
+  <v-layout row wrap>
+    <v-form @submit.prevent="submit">
+      <v-flex xs12 pa-3>                          
             <v-card>
-                <general-information></general-information>
-                <establishment-information></establishment-information>
-                <product-line></product-line>
-                <office-address></office-address>
-                <warehouse-address></warehouse-address>                
-                <qualified-personnel></qualified-personnel>
-                
-
-
-                
-
-                <v-card-title primary-title>
-                     <span class="title font-weight-light">
-                    Scanned Documents                     
-                    </span>
-                    <v-spacer></v-spacer>
-                    <v-btn small fab icon color="primary">
-                        <v-icon>add</v-icon>
-                    </v-btn>
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                    <v-data-table
-                            :headers="headers"
-                            :items="desserts"
-                            class="elevation-1"
-                        >
-                            <template slot="items" slot-scope="props">
-                            <td>{{ props.item.name }}</td>
-                            <td class="text-xs-right">{{ props.item.calories }}</td>
-                            <td class="text-xs-right">{{ props.item.fat }}</td>
-                            <td class="text-xs-right">{{ props.item.carbs }}</td>
-                            <td class="text-xs-right">{{ props.item.protein }}</td>
-                            <td class="text-xs-right">{{ props.item.iron }}</td>                            
-                            </template>                           
-                        </v-data-table>
-                </v-card-text>
-                
-                 
-            </v-card>
-        </v-form>
-        </v-flex>
-    <v-layout column class="fab-container">
-      <v-tooltip top>
-        <v-btn dark slot="activator" fab color="secondary" @click="dialog=true">
-          <v-icon large>save</v-icon>
-        </v-btn>Save
-      </v-tooltip>
-      <v-tooltip top>
-        <v-btn dark slot="activator" fab color="primary" @click="dialog=true">
-          <v-icon large>send</v-icon>
-        </v-btn>Submit
-      </v-tooltip>
-      <!-- <v-speed-dial>
-      <v-btn
-        slot="activator"
-        v-model="fab"
-        color="primary"
-        dark
-        fab
-      >
-        <v-icon>menu</v-icon>
-        <v-icon>close</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="green"
-      >
-        <v-icon>edit</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="indigo"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="red"
-      >
-        <v-icon>delete</v-icon>
-      </v-btn>
-    </v-speed-dial> -->
-    </v-layout>
+                <general-information :license="license"></general-information>
+                <establishment-information :license="license"></establishment-information>
+                <product-line :license="license"></product-line>
+                <office-address :license="license"></office-address>
+                <warehouse-address :license="license"></warehouse-address>  
+                <authorized-officer :license="license"></authorized-officer>              
+                <qualified-personnel :license="license"></qualified-personnel>
+                <scanned-documents :license="license" @upload="upload"></scanned-documents> 
+                <v-card-actions>
+                  
+                  <v-btn large color="primary">Save</v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn large color="primary"  @click="submit()">Submit</v-btn>
+                </v-card-actions>
+            </v-card>      
+      </v-flex>
+      <v-layout column class="fab-container-bottom">
+        <v-tooltip top>
+          <v-btn small dark slot="activator" fab color="primary" @click="home">
+            <v-icon>home</v-icon>
+          </v-btn>Home
+        </v-tooltip>
+        <v-tooltip top>
+          <v-btn small dark slot="activator" fab color="primary" @click="submit()">
+            <v-icon>send</v-icon>
+          </v-btn>Submit
+        </v-tooltip>
+      </v-layout> 
+    </v-form>   
   </v-layout>
 </template>
 
 <script>
-import GeneralInformation from './GeneralInformation'
-import EstablishmentInformation from './EstablishmentInformation'
-import ProductLine from './ProductLine'
-import OfficeAddress from './OfficeAddress'
-import WarehouseAddress from './WarehouseAddress'
-import QualifiedPersonnel from './QualifiedPersonnel'
+import GeneralInformation from "./GeneralInformation";
+import EstablishmentInformation from "./EstablishmentInformation";
+import ProductLine from "./ProductLine";
+import OfficeAddress from "./OfficeAddress";
+import WarehouseAddress from "./WarehouseAddress";
+import AuthorizedOfficer from "./AuthorizedOfficer";
+import QualifiedPersonnel from "./QualifiedPersonnel";
+import ScannedDocuments from "./ScannedDocuments";
 
 export default {
-    components:{
-        GeneralInformation,
-        EstablishmentInformation,
-        ProductLine,
-        OfficeAddress,
-        WarehouseAddress,
-        QualifiedPersonnel
+  components: {
+    GeneralInformation,
+    EstablishmentInformation,
+    ProductLine,
+    OfficeAddress,
+    WarehouseAddress,
+    AuthorizedOfficer,
+    QualifiedPersonnel,
+    ScannedDocuments
+  },
+  data() {
+    return {
+      formData:null,
+      license:{
+        general_info:{
+          addtl_activity:[]
         },
-    data(){
-        return{
-            fab:false,
-            dialogValue:false,
-            dateValue:null,
-           headers:[
-               { text: 'Product Type', value: 'type' },
-                { text: 'Remarks', value: 'remarks' },
-           ]
+        estab_details:{
+          products:[]
+        },
+        addresses:{
+          office:{},
+          warehouse:[],
+          plant:[]
+        },
+        auth_officer:{
+          mail_add:{}
+        },
+        qualified_personnel:[]
+      }
+    };
+  },
+  created(){
+    this.init();
+  },
+  methods: {
+    init(){
+        this.license.application_type = '0'
+    },
+    home(){
+      this.$router.push('/app')
+    },
+    upload(formData){
+      this.formData = formData;
+    },
+    submit() {
+      this.license.created_by = 'aabalita'
+      this.$store.dispatch('SAVE_LICENSES', {license:this.license, upload: this.formData})
+      .then(result=>{
+        if(result.success){
+          this.$notify({message:'Sucess! CASE#: ' + result.model.case_details.case_no, color:'primary'})
+          this.$store.commit('SET_LICENSE', result.model)
+          this.$router.push('/app/payments');
+        }else{
+           this.$notifyError(result.errors)
         }
+      })
+      .catch(err=>{
+        console.log('ERROR: '+ err)
+        this.$notifyError(err)        
+      })
     }
-
-}
+  }
+};
 </script>
 
 <style>
-
 </style>

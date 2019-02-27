@@ -1,19 +1,25 @@
 // import setAuthToken from '@/axios-config.js'
 // var jwt = require('jsonwebtoken')
 import store from '../index'
-import LicenseAPI from '../../api/LicenseApi';
+import LicenseAPI from '@/api/LicenseApi';
 import {
     resolve
 } from 'url';
 
 const state = {
     LicenseAPI: null,
-    licenses: [],
+    licenses: [],    
     form: null,
-    uploaded: null
+    uploaded: null,
+    case:null,
+    license:null
 }
 
 const mutations = {
+    SET_LICENSE(state, data){
+        state.license = data.license;
+        state.case = data.case_details
+    },
     SET_LICENSES(state, licenses) {
         state.licenses = null;
         state.licenses = licenses;
@@ -26,7 +32,7 @@ const mutations = {
     UPLOADED_DATA(state, form) {
         state.uploaded = form
     }
-}
+}   
 
 var actions = {
     // GET_UNASSIGNED(context) {
@@ -52,18 +58,19 @@ var actions = {
         })
     },
     SAVE_LICENSES(context, license) {
-        return new Promise((resolve, reject) => {
-            new LicenseAPI(context.rootState.user_session.token).saveLicenses(license, (licenses, err) => {
-                if (!err) {
-                    console.log('actions save licenses store: ' + JSON.stringify(licenses))
-                    context.commit('SET_FORM', licenses)
-                    resolve()
-                } else {
-                    console.log("actions save licenses error: " + JSON.stringify(err))
-                    reject()
-                }
-            })
-        })
+        return new LicenseAPI(context.rootState.user_session.token).saveLicenses(license);
+        // return new Promise((resolve, reject) => {
+        //     new LicenseAPI(context.rootState.user_session.token).saveLicenses(license, (licenses, err) => {
+        //         if (!err) {
+        //             console.log('actions save licenses store: ' + JSON.stringify(licenses))
+        //             context.commit('SET_FORM', licenses)
+        //             resolve()
+        //         } else {
+        //             console.log("actions save licenses error: " + JSON.stringify(err))
+        //             reject()
+        //         }
+        //     })
+        // })
     },
     SAVE_MODIFY_LICENSES(context, license) {
         return new Promise((resolve, reject) => {

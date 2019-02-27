@@ -18,7 +18,7 @@ export default class UserAPI {
   static login(credentials, cb) {
     axios
       .post(
-        "public/accounts/auth", {}, {
+        "public/accounts/auth/admins", {role:'2'}, {
           auth: {
             username: credentials.username,
             password: credentials.password
@@ -128,8 +128,29 @@ export default class UserAPI {
    * @param {AccountsModel} account 
    * @param {Function} cb 
    */
-  static updateAccount(account, cb) {
-    axios.post('secured/accounts/' + account._id, account)
+  static updateAccount(profile) {
+
+    return new Promise((resolve, reject)=>{
+      axios.post('documents/avatars?account_id=' + profile.account._id, profile.avatar)
+      .then(result1=>{
+        console.log('SAVING AVATAR: ' + JSON.stringify(result1.data))
+        if(result1.data.success){
+          profile.account.avatar = result1.data.model
+          return axios.post('secured/accounts/admin/' + profile.account._id, profile.account)
+        }else{
+          resolve(result1.data)
+        }
+      })
+      .then(result2=>{
+        console.log('SAVING PROFILE: ' + JSON.stringify(result2.data))
+        resolve(result2.data)
+      })
+      .catch(err=>{        
+        reject(err)
+      })
+      
+    })
+    axios.post('secured/admin/' + account._id, account)
       .then(result => {
         if (result.data.success) {
           cb(result.data.model);

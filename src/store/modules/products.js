@@ -28,25 +28,48 @@ const mutations = {
 }
 
 var actions = {
-    GET_PRODUCT_TYPE(context) {
-        return new Promise((resolve, reject) => {
-            new ProductApi(context.rootState.user_session.token).productType((productType, err) => {
-                if(!err){
-                    context.commit('SET_PRODUCT_TYPE', productType)
-                    resolve()
-                }else{
-                    reject(err)
-                }
+
+    GET_ALL_PRODUCT_REFERENCE(context){
+        var prodAPI = new ProductApi(context.rootState.user_session.token);
+        var reference = {}
+        return new Promise((resolve, reject) => {            
+            prodAPI.productType()
+            .then(products=>{
+                reference.products = products.data.model;
+                context.commit('SET_PRODUCT_TYPE', products.data.model)
+                return prodAPI.getAllPrimary();
+            })
+            .then(primary=>{
+                reference.primary = primary.data.model;
+                context.commit('SET_PRIMARY_ACTIVITY', primary.data.model)
+                return prodAPI.getAllAdditional();
+            })
+            .then(additional=>{
+                reference.additional = additional.data.model;
+                context.commit('SET_ADDITIONAL', additional.data.model)
+                return prodAPI.getAllDeclared();
+            })
+            .then(declared=>{
+                reference.declared = declared.data.model;
+                context.commit('SET_DECLARED', declared.data.model)
+                resolve(reference)
+            })
+            .catch(err =>{
+                reject(err)
             })
         })
-        
     },
+
+    GET_PRODUCT_TYPE(context) {
+        return new ProductApi(context.rootState.user_session.token).productType()        
+    },
+
     GET_PRIMARY_ACTIVITY(context, product) {
         return new Promise((resolve, reject) => {
             new ProductApi(context.rootState.user_session.token).primary(product, (productType, err) => {
                 if(!err){
                     context.commit('SET_PRIMARY_ACTIVITY', productType)
-                    resolve()
+                    resolve(productType)
                 }else{
                     reject(err)
                 }
@@ -67,10 +90,10 @@ var actions = {
     },
     GET_ADDITIONAL(context, primaryActivity) {
         return new Promise((resolve, reject) => {
-            new ProductApi(context.rootState.user_session.token).additional(primaryActivity, (primaryActivity, err) => {
+            new ProductApi(context.rootState.user_session.token).additional(primaryActivity, (activities, err) => {
                 if(!err){
-                    context.commit('SET_ADDITIONAL', primaryActivity)
-                    resolve();
+                    context.commit('SET_ADDITIONAL', activities)
+                    resolve(activities);
                 }else{
                     reject()
                 }
@@ -82,7 +105,7 @@ var actions = {
             new ProductApi(context.rootState.user_session.token).declared(primaryActivity, (primaryActivity, err) => {
                 if(!err){
                     context.commit('SET_DECLARED', primaryActivity)
-                    resolve()
+                    resolve(primaryActivity)
                 }else{
                     reject()
                 }

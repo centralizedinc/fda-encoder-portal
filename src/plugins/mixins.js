@@ -83,7 +83,52 @@ export default {
         logout() {
           this.$store.dispatch("LOGOUT");
           this.$router.push("/");
-        }
+        },
+        requiredRule(value){
+          return !!value || "This is a required field"
+        },
+        emailRule(value){          
+          var validate = false;
+          var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          validate = this.isEmpty(value) || !re.test(value);
+          return !validate || 'Invalid Email';
+        },
+        getRegionName(id){          
+          for(var i=0; i<this.$store.state.address.regions.length; i++){
+            var region = this.$store.state.address.regions[i]
+            if(region._id === id){
+              return region.name
+            }
+          }
+        },
+        getProvinceName(id){          
+          for(var i=0; i<this.$store.state.address.provinces.length; i++){
+            var province = this.$store.state.address.provinces[i]
+            if(province._id === id){
+              return province.name
+            }
+          }
+        },
+        getCityName(id){          
+          for(var i=0; i<this.$store.state.address.cities.length; i++){
+            var city = this.$store.state.address.cities[i]
+            if(city._id === id){
+              return city.name
+            }
+          }
+        },
+        getApplicationTypeName(id){        
+         if(id === '0'){
+           return 'Initial'
+         }else if( id === '1'){
+           return 'Variation'
+         }else{
+           return 'Renewal'
+         }
+        },
+        check_avatar(avatar){
+          return avatar?avatar:'https://avatars.dicebear.com/v2/identicon/'+this.$store.state.user_session.user.username+'.svg'
+        },
       }
     });
   }

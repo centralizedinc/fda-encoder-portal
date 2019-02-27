@@ -1,160 +1,17 @@
 <template>
   <v-app>
     <notification></notification>
-    <v-navigation-drawer app :mini-variant="mini || $vuetify.breakpoint.mdAndDown" width="250">
-      <v-toolbar
-        dark
-        style="height: 100px; background: linear-gradient(45deg, #38c73c 0%, #b5c25a 100%)"
-      >
-        <v-list class="pa-0">
-          <v-list-tile
-            class="pa-1"
-            avatar
-            style=" height: 100px; background:url('https://i.postimg.cc/YCbD5mHP/image.png') repeat center center"
-          >
-            <v-list-tile-avatar class="mt-4">
-              <img src="http://i.pravatar.cc/300">
-            </v-list-tile-avatar>
-            <v-spacer></v-spacer>
-            <v-list-tile-content class="mt-4">
-              <v-list-tile-title class="body-2">{{user.username}}</v-list-tile-title>
-              <v-list-tile-sub-title class="caption">Last Logged in:</v-list-tile-sub-title>
-              <v-list-tile-sub-title class="caption">{{formatDate(user.last_login)}}</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-toolbar>
-      <v-list>
-        <template >
-          <v-list-tile @click="goTo('/app')" class="ma-1" :style="activeRoute('Dashboard')">
-            <v-list-tile-action>
-              <v-tooltip top>
-                <v-btn slot="activator" icon>
-                  <v-icon color="fdaBlueGreen">dashboard</v-icon>
-                </v-btn>Dashboard
-              </v-tooltip>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title class="body-1 font-weight-light">Dashboard</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-list-tile @click="goTo('/app/licenses')" class="ma-1" :style="activeRoute('Licenses')">
-            <v-list-tile-action>
-              <v-tooltip top>
-                <v-btn slot="activator" icon>
-                  <v-icon color="fdaBlueGreen">fas fa-file-contract</v-icon>
-                </v-btn>Licenses
-              </v-tooltip>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title class="body-1 font-weight-light">Licenses</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <!-- <v-list-tile
-            @click="goTo('/app/certificates')"
-            class="ma-1"
-            :style="activeRoute('Certificates')"
-          >
-            <v-list-tile-action>
-              <v-tooltip top>
-                <v-btn slot="activator" icon>
-                  <v-icon color="fdaBlueGreen">fas fa-certificate</v-icon>
-                </v-btn>Certificates
-              </v-tooltip>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title class="body-1 font-weight-light">Certificates</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile> -->
-          <!-- <v-list-tile
-            @click="goTo('/app/notification')"
-            class="ma-1"
-            :style="activeRoute('Notifications')"
-          >
-            <v-list-tile-action>
-              <v-tooltip top>
-                <v-btn slot="activator" icon>
-                  <v-icon color="fdaBlueGreen">fas fa-file-invoice</v-icon>
-                </v-btn>Product Notification
-              </v-tooltip>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title class="body-1 font-weight-light">Product Notification</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile> -->
-
-          <v-list-tile @click="goTo('/app/payments')" class="ma-1" :style="activeRoute('Payments')">
-            <v-list-tile-action>
-              <v-tooltip top>
-                <v-btn slot="activator" icon>
-                  <v-icon color="fdaBlueGreen">far fa-credit-card</v-icon>
-                </v-btn>Payments
-              </v-tooltip>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title class="body-1 font-weight-light">Payments</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-divider></v-divider>
-        </template>
-        <v-list-tile
-          @click="goTo('/app/profile')"
-          class="ma-1"
-          :style="activeRoute('Notifications')"
-        >
-          <v-list-tile-action>
-            <v-tooltip top>
-              <v-btn slot="activator" icon>
-                <v-icon color="fdaBlueGreen">far fa-user-circle</v-icon>
-              </v-btn>My Profile
-            </v-tooltip>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title class="body-1 font-weight-light">My Profile</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile
-          @click="goTo('/app/password')"
-          class="ma-1"
-          :style="activeRoute('Notifications')"
-        >
-          <v-list-tile-action>
-            <v-tooltip top>
-              <v-btn slot="activator" icon>
-                <v-icon color="fdaBlueGreen">fas fa-key</v-icon>
-              </v-btn>Password Settings
-            </v-tooltip>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title class="body-1 font-weight-light">Password Settings</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="showLogout()" class="ma-1" :style="activeRoute('Logout')">
-          <v-list-tile-action>
-            <v-tooltip top>
-              <v-btn slot="activator" icon>
-                <v-icon color="fdaBlueGreen">fas fa-sign-out-alt</v-icon>
-              </v-btn>Logout
-            </v-tooltip>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title class="body-1 font-weight-light">Logout</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
+    
     <v-toolbar
       app
       dark
       style="background: linear-gradient(45deg, #104b2a 0%, #b5c25a 100%); box-shadow: 0 6px 20px 0 rgba(77, 182, 172, 0.5)"
     >
-      <v-btn icon color="transparent" @click.stop="mini = !mini">
+      <!-- <v-btn icon color="transparent" @click.stop="mini = !mini">
         <v-icon color="fdaGold" v-if="mini">menu</v-icon>
         <v-icon color="fdaGold" v-else>chevron_left</v-icon>
-      </v-btn>
-      <span class="headline font-weight-light">FDA Client Portal</span>
+      </v-btn> -->
+      <span class="headline font-weight-light">FDA Encoder Portal</span>
       <v-spacer></v-spacer>
 
       <v-menu offset-y>
@@ -180,7 +37,7 @@
       <v-menu offset-y>
         <v-btn icon slot="activator">
           <v-avatar size="40">
-            <img src="http://i.pravatar.cc/200" alt="alt">
+            <img :src="check_avatar(user.avatar.location)" alt="alt">
           </v-avatar>
         </v-btn>
         <v-list two-line subheader>
@@ -203,7 +60,7 @@
           <v-list-tile avatar @click="showLogout">
             <v-list-tile-content>
               <v-list-tile-title class="body-2 font-weight-light">Logout</v-list-tile-title>
-              <v-list-tile-sub-title class="caption font-weight-thin">Sing out of FDA Portal</v-list-tile-sub-title>
+              <v-list-tile-sub-title class="caption font-weight-thin">Sign out of FDA Portal</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>

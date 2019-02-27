@@ -1,6 +1,127 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6 pa-3>          
+    <v-flex xs12 pa-3>
+      <span class="title">Licenses</span>
+      <v-divider></v-divider>
+    </v-flex>
+    
+    <v-flex xs3 pa-3>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <span class="title font-weight-light">
+            New License
+          </span>
+        </v-toolbar>
+        <v-card-text>
+          Apply FDA license for the first time.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="goTo('/app/licenses/new')">Start</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+    <v-flex xs3 pa-3>
+      <v-card>
+          <v-toolbar dark color="primary">
+          <span class="title font-weight-light">
+            Renew License
+          </span>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          For expired FDA license. License Renewal Process.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary">Start</v-btn>          
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+    <v-flex xs3 pa-3>
+      <v-card>        
+        <v-toolbar dark color="primary">
+          <span class="title font-weight-light">
+            License Variation
+          </span>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          For expired FDA license. License Renewal Process.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary">Start</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+    <v-flex xs3 pa-3>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <span class="title font-weight-light">
+            License Search
+          </span>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          Search and Track License Application
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary">Start</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+  <!-- Payments -->
+  <v-flex xs12 pa-3>
+      <span class="title">Payments</span>
+      <v-divider></v-divider>
+    </v-flex>
+    
+    <v-flex xs3 pa-1>
+      <v-card>
+        <v-card-title primary-title>
+          <span class="title font-weight-light">
+            Accept Payments
+          </span>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          Apply FDA license for the first time.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary">Start</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+    <v-flex xs3 pa-1>
+      <v-card>
+        <v-card-title primary-title>
+          <span class="title font-weight-light">
+            View Payments
+          </span>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          For expired FDA license. License Renewal Process.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary">Start</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+
+    <v-flex xs8 pa-3>          
       <v-card>
       <v-sheet
         class="v-sheet--offset mx-auto"
@@ -355,6 +476,9 @@ export default {
     ]
   }),
   methods: {
+    goTo(nav){
+      this.$router.push(nav)
+    },
     functionEvents(date) {
       const [, , day] = date.split("-");
       if ([12, 17, 28].includes(parseInt(day, 10))) return true;

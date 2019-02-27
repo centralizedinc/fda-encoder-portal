@@ -62,7 +62,6 @@ function dropBreadcrumbs(to, from, next) {
 var router = new Router({
   routes: [{
       path: '/',
-      name: 'Main',
       component: MainLayout,
       children: [{
           path: '',
@@ -80,7 +79,7 @@ var router = new Router({
     {
       path: '/app',
       component: UserLayout,
-      // beforeEnter: isActiveSession,
+      beforeEnter: isActiveSession,
       children: [{
           path: '',
           name: 'Dashboard',
@@ -95,6 +94,16 @@ var router = new Router({
           path: 'licenses/new',
           name: 'License Application Form',
           component: () => import('@/views/app/licenses/apply/ApplicationForm.vue'), 
+        },
+        {
+          path: 'payments',
+          name: 'Cashier',
+          component: () => import('@/views/app/payments/Cashier.vue'), 
+        },
+        {
+          path: 'profile',
+          name: 'Profile',
+          component: () => import('@/views/app/Profile.vue'), 
         }
       ]
 

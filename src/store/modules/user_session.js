@@ -151,16 +151,7 @@ var actions = {
 
 
   UPDATE_ACCOUNT: (context, account) => {
-    return new Promise((resolve, reject) => {
-      UserAPI.updateAccount(account, (res, err) => {
-        if (!err) {
-          resolve(res)
-        } else {
-          reject(err)
-        }
-      })
-    })
-
+    return UserAPI.updateAccount(account)
   }
 };
 

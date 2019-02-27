@@ -9,17 +9,20 @@ export default class ProductAPI {
         axios.defaults.headers.common['Content-Type'] = 'application/json'
         // axios.defaults.headers.common['access_token'] = token;
     }
-    productType(cb) {
-        axios.get('core/products')
-        .then(result => {
-            if (result.data.success) {
-              cb(result.data.model)
-            }
-          })
-          .catch(err => {
-            console.log(JSON.stringify(err));
-            cb(null, err)
-          });
+    productType() {
+        return axios.get('core/products');
+    }
+
+    getAllPrimary(){
+      return axios.get('core/primary/');
+    }
+
+    getAllAdditional(){
+      return axios.get('core/additional/');
+    }
+
+    getAllDeclared(){
+      return axios.get('core/declared/');
     }
 
     primary(productType, cb) {
@@ -47,7 +50,7 @@ export default class ProductAPI {
     }
 
     additional(primary, cb) {
-        axios.get("core/additional/additional"+primary)
+        axios.get("core/additional/additional/"+primary)
         .then(result => {
           if (result.data.success) {
             cb(result.data.model)
@@ -59,7 +62,7 @@ export default class ProductAPI {
     }
 
     declared(primary, cb) {
-        axios.get("core/declared/declared"+ primary)
+        axios.get("core/declared/declared/"+ primary)
         .then(result => {
           if (result.data.success) {
             cb(result.data.model)

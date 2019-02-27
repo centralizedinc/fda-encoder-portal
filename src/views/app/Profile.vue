@@ -1,146 +1,113 @@
 <template>
-    <v-layout row wrap>
-        
-        <v-flex xs12 md4 pa-2>
-            <v-card>
-                <!-- <v-card-title primary-title>
-                    Company
-                </v-card-title> -->
-                <v-toolbar dark color="primary">
-                    <span class="title font-weight-thin">Company Details</span>
-                </v-toolbar>
-                <v-divider></v-divider>
-                <v-card-text>
-                    <v-text-field
-                        name="name"
-                        label="Name of Establishment"
-                        v-model="account.company.name"
-                        :disabled="true"
-                        id="id"
-                    ></v-text-field>
-                    <v-text-field
-                        name="name"
-                        label="Establishment Owner"
-                        v-model="account.company.owner"
-                        id="id"
-                    ></v-text-field>
-                    <v-text-field
-                        name="name"
-                        label="TIN"
-                        v-model="account.company.tin"
-                        id="id"
-                        mask="###-###-###-###"
-                    ></v-text-field>
-                    <v-textarea
-                        name="name"
-                        label="Office Address"
-                        v-model="account.company.address.address"
-                        id="id"
-                    ></v-textarea>
-                    <v-select
-                        :items="items"
-                        v-model="account.company.address.region"
-                        label="Region"
-                    ></v-select>
-                     <v-select
-                        :items="items"
-                        v-model="account.company.address.province"
-                        label="Province"
-                    ></v-select>
-                     <v-select
-                        :items="items"
-                        v-model="account.company.address.city"
-                        label="City/Town"
-                    ></v-select>
-                    <v-text-field
-                        name="name"
-                        label="Zip code"
-                        v-model="account.company.address.zipCode"
-                        id="id"
-                    ></v-text-field>
-                </v-card-text>
-            </v-card>            
-        </v-flex>
-
-        <v-flex xs12 md4 pa-2>
+    <v-layout  justify-center>
+        <v-flex xs5 pa-4 d-flex>
             <v-card>
                 <v-toolbar dark color="primary">
                     <span class="title font-weight-thin">User Details</span>
                 </v-toolbar>
                 <v-divider></v-divider>
-                <v-card-text>
+                <v-card-text>                    
                     <v-text-field
+                        outline
                         name="name"
                         label="Last Name"
-                        v-model="account.name.last"
                         id="id"
+                        v-model="account.last_name"
                     ></v-text-field>
                     <v-text-field
+                        outline
                         name="name"
                         label="First Name"
-                        v-model="account.name.first"
                         id="id"
+                        v-model="account.first_name"
                     ></v-text-field>
                     <v-text-field
+                        outline
                         name="name"
                         label="Middle Name"
-                        v-model="account.name.middle"
                         id="id"
+                        v-model="account.middle_name"
                     ></v-text-field>
                     <v-text-field
+                        outline
                         name="name"
-                        label="TIN"
-                        v-model="account.tin"
+                        label="Email"
                         id="id"
-                        mask="###-###-###-###"
-                    ></v-text-field>
-                    <v-text-field
-                        name="name"
-                        label="Email Address"
                         v-model="account.email"
-                        id="id"
                     ></v-text-field>
                     <v-text-field
+                        outline
                         name="name"
-                        label="Phone Number"
+                        label="Contact Number"
                         id="id"
-                    ></v-text-field>
-                    <v-text-field
-                        name="name"
-                        label="Mobile Number"
-                        id="id"
+                        v-model="account.lastname"
                     ></v-text-field>
                 </v-card-text>
             </v-card>
         </v-flex>
-
-        <v-flex xs12 md4 pa-2>
+        <v-flex xs5 pa-4 d-flex>
             <v-card>
                 <v-toolbar dark color="primary">
                     <span class="title font-weight-thin">User Account</span>
                 </v-toolbar>
                 <v-divider></v-divider>
-                <v-card-text>
-                    <v-layout align-center justify-center>
-                    <v-avatar
-                        size="100"
-                    >
-                        <img src="http://i.pravatar.cc/200" alt="alt">
-                    </v-avatar>
+                <v-layout align-center justify-center pa-3>
+                    <input
+                            name="avatar"
+                            type="file"
+                            style="display: none"
+                            ref="image"
+                            @change="onFilePicked"
+                            accept="image/*"
+                        >
+                        <!-- <v-btn icon slot="activator"> -->
+                            <a @click="$refs.image.click()">
+                        <v-avatar size="150">
+                            <v-img :src="check_avatar(account.avatar.location)" alt="alt">
+                                <v-layout
+                                    slot="placeholder"
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0
+                                >
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                </v-layout>
+                            </v-img>
+                        </v-avatar>
+                            </a>
+                        <!-- </v-btn> -->
+                        <!-- <v-btn icon slot="activator">
+                           <v-avatar
+                                size="150"
+                            >
+                                <img src="http://i.pravatar.cc/200" alt="alt">
+                            </v-avatar>
+                        </v-btn> -->
+                    
                     </v-layout>
+                <v-card-text>
+                    
                     <v-text-field
+                        outline
                         name="name"
                         label="Username"
                         id="id"
                         v-model="account.username"
                     ></v-text-field>
                     <v-text-field
+                        outline
                         name="name"
-                        label="Password"
+                        label="New Password"
                         id="id"
                         type="password"
-                        :disabled="true"
-                        value="12345678"
+                    ></v-text-field>
+                    <v-text-field
+                        outline
+                        name="name"
+                        label="Confirm Password"
+                        id="id"
+                        type="password"
                     ></v-text-field>
                 </v-card-text>
             </v-card>
@@ -156,14 +123,13 @@
       >
         <v-icon>save</v-icon>
       </v-btn> -->
-      <v-layout column class="fab-container">
+      <v-layout column class="fab-container-bottom">
           <v-tooltip top>
               <v-btn slot="activator" fab color="primary" @click="save()">
                 <v-icon>save</v-icon>
             </v-btn>
             Save Changes
-          </v-tooltip>
-      
+          </v-tooltip>      
     </v-layout>
     </v-layout>
 </template>
@@ -172,7 +138,9 @@
 export default {
     data(){
         return{
-            account:{}
+            account:{},
+            avatar:null,
+            formData:null
         }
     },
     created(){
@@ -182,8 +150,15 @@ export default {
         init(){
             this.account = this.$store.state.user_session.user
         },
+        onFilePicked(event){
+            console.log(event.target.files[0])
+            this.formData = new FormData();
+            this.formData.append(event.target.name, event.target.files[0], event.target.files[0].name)
+             this.account.avatar.location = URL.createObjectURL(event.target.files[0])
+        },        
         save(){
-            this.$store.dispatch('UPDATE_ACCOUNT', this.account)
+            console.log('PROFILE: ' + JSON.stringify(this.account))
+            this.$store.dispatch('UPDATE_ACCOUNT', {account:this.account, avatar:this.formData})
             .then(result=>{
                 this.$notify({message:'Your account has been updated!', color: 'primary'})
                 // this.$store.dispatch('LOGOUT')
