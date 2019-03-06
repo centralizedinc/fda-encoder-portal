@@ -16,9 +16,18 @@ export default {
             var task = this.$store.state.tasks.tasks.find(x => {
               return x._id === task_id;
             });
-            return task;
+            return task.name;
           } else {
             return null;
+          }
+        },
+        getActivityStatus(type){
+          if (type == 0) {
+            return "Approved"
+          } else if (type == 1) {
+            return "Recommend"
+          } else if (type == 2) {
+            return "Denied"
           }
         },
         getProduct(product_id) {
