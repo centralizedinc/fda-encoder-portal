@@ -115,6 +115,12 @@ var router = new Router({
           component: () => import('@/views/app/payments/Cashier.vue'), 
         },
         {
+          path: 'payments/accept',
+          name: 'Accept Payment',
+          beforeEnter: isActiveSession,
+          component: () => import('@/views/app/payments/Accept.vue'), 
+        },
+        {
           path: 'profile',
           name: 'Profile',
           beforeEnter: isActiveSession,

@@ -173,12 +173,12 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outline icon @click="goTo('/app/licenses/new')">
+          <v-btn outline icon @click="goTo('/app/payments/Accept')">
             <v-icon>search</v-icon>
           </v-btn>
-          <v-btn outline icon @click="goTo('/app/licenses/new')">
+          <!-- <v-btn outline icon @click="goTo('/app/licenses/new')">
             <v-icon>edit</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-card-actions>
       </v-card>
     </v-flex>

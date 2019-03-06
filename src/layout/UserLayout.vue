@@ -35,11 +35,11 @@
       </v-menu>
 
       <v-menu offset-y>
-        <v-btn icon slot="activator">
+        <!-- <v-btn icon slot="activator">
           <v-avatar size="40">
             <img :src="check_avatar(user.avatar.location)" alt="alt">
           </v-avatar>
-        </v-btn>
+        </v-btn> -->
         <v-list two-line subheader>
           <v-list-tile avatar @click="goTo('/app/profile')">
             <v-list-tile-content>
