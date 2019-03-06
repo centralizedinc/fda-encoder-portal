@@ -144,19 +144,11 @@ export default class UserAPI {
         reject(err)
       })
       
-    })
-    axios.post('secured/admin/' + account._id, account)
-      .then(result => {
-        if (result.data.success) {
-          cb(result.data.model);
-        } else {
-          cb(null, result.data.errors);
-        }
-      })
-      .catch(err => {
-        console.log("err... " + err);
-        cb(null, err);
-      })
+    })    
+  }
+
+  static findAccount(id){
+    return axios.get('secured/accounts/admin/'+ id)
   }
 
 }

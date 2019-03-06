@@ -12,7 +12,7 @@ export default class TaskApi {
 
     getTask(cb) {
         console.log("API")
-        axios.get('/core/tasks').then((result) => {
+        axios.get('lto-api/task').then((result) => {
             if (result.data.success) {
                 cb(result.data.model)
             } else {

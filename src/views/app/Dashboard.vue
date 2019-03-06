@@ -6,7 +6,7 @@
     </v-flex>
     
     <v-flex xs3 pa-3>
-      <v-card dark style="background:linear-gradient(360deg, #0F901A 0%, #97C76E 100%); box-shadow:0 6px 20px 0 rgba(38, 198, 218, 0.5)">       
+      <v-card  dark style="background:linear-gradient(360deg, #0F901A 0%, #97C76E 100%); box-shadow:0 6px 20px 0 rgba(38, 198, 218, 0.5)">       
         <v-card-title primary-title>
                     
           <v-layout row wrap>
@@ -31,7 +31,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outline icon @click="goTo('/app/licenses')">
+          <v-btn outline icon @click="goTo('/app/licenses/0')">
             <v-icon>search</v-icon>
           </v-btn>
           <v-btn outline icon @click="goTo('/app/licenses/new')">
@@ -65,7 +65,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outline icon @click="goTo('/app/licenses/renew')">
+          <v-btn outline icon @click="goTo('/app/licenses/2')">
             <v-icon>search</v-icon>
           </v-btn>
           <v-btn outline icon @click="goTo('/app/licenses/renew')">
@@ -102,7 +102,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outline icon @click="goTo('/app/licenses/new')">
+          <v-btn outline icon @click="goTo('/app/licenses/1')">
             <v-icon>search</v-icon>
           </v-btn>
           <v-btn outline icon @click="goTo('/app/licenses/new')">
@@ -236,15 +236,4 @@ export default {
 
 
 <style>
-.dcard {
-  -webkit-box-reflect: below 6px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
-}
-.v-picker__title__btn:not(.v-picker__title__btn--active) {
-  font-size: 50px;
-}
 </style>
-
-// .primary {
-//   background: linear-gradient(45deg, #e0c71c 0%, #e9d758 100%);
-//   /* border-color: #104b2a !important; */
-// }

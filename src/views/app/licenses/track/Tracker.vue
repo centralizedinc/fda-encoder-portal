@@ -47,10 +47,11 @@
                     :headers="headers"
                     :items="case_details.activities"
                     class="elevation-1"
+                    :loading="isLoading"
                 >
                      <template slot="items" slot-scope="props">
-                        <td>{{ props.item.task_id }}</td>
-                        <td>{{ props.item.status }}</td>
+                        <td>{{ getTask(props.item.task_id) }}</td>
+                        <td>{{ getActivityStatus(props.item.status) }}</td>
                         <td>{{ formatDate(props.item.date_completed) }}</td>
                         <td>{{ props.item.remarks }}</td>
                     </template>
@@ -65,11 +66,16 @@
             </v-card>
             
         </v-flex>
+        <fab-buttons></fab-buttons>
     </v-layout>
 </template>
 
 <script>
+import FabButtons from "@/components/FabButtons"
 export default {
+    components:{
+        FabButtons
+    },
     data(){
         return{
             isLoading:false,
@@ -93,7 +99,6 @@ export default {
                 this.isLoading = false;
                 if(result.data.success){
                     this.case_details = result.data.model;
-                    console.log('CASE:' + JSON.stringify(this.case_details))
                 }else{
                    this.$notifyError(result.data.errors) 
                 }                

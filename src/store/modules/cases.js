@@ -11,7 +11,7 @@ const state = initialState;
 
 const mutations = {
     INIT(state, payload){
-        state.case_api = new CaseAPI(payload);
+        
     },
     SET_DETAILS(state, data){
         state.case_details = data;
@@ -24,7 +24,7 @@ const mutations = {
 const actions = {
     FIND_CASE(context, data){
         return new Promise((resolve, reject)=>{
-            context.state.case_api.findCase(data)
+            CaseAPI.findCase(data)
             .then(case_details=>{
                 if(case_details.data.success){
                     context.commit('SET_DETAILS', case_details.data.model)
@@ -37,6 +37,12 @@ const actions = {
         }) 
         
     },
+
+    FIND_ENCODED_CASE(context,data){
+        return CaseAPI.findCaseByEncoder(data.encoder_group, data.application_type)
+
+        // return context.state.case_api.findCaseByEncoder(data.encoder_group, data.application_type)
+    }
 
 }
 

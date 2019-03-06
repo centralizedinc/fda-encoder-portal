@@ -83,13 +83,7 @@ var router = new Router({
           name: 'Dashboard',
           beforeEnter: isActiveSession,
           component: () => import('@/views/app/Dashboard.vue'),
-        },
-        {
-          path: 'licenses',
-          name: 'Licenses',
-          beforeEnter: isActiveSession,
-          component: () => import('@/views/app/licenses/Licenses.vue'), 
-        },
+        },        
         {
           path: 'licenses/new',
           name: 'License Application Form',
@@ -107,6 +101,12 @@ var router = new Router({
           name: 'Search License',
           beforeEnter: isActiveSession,
           component: () => import('@/views/app/licenses/track/Tracker.vue'), 
+        },
+        {
+          path: 'licenses/:app_type',
+          name: 'License Applications',
+          beforeEnter: isActiveSession,
+          component: () => import('@/views/app/licenses/Licenses.vue'), 
         },
         {
           path: 'payments',
