@@ -124,7 +124,7 @@ var router = new Router({
           path: 'payments/accept',
           name: 'Payments Verification',
           beforeEnter: isActiveSession,
-          component: () => import('@/views/app/payments/accept.vue'), 
+          component: () => import('@/views/app/payments/Accept.vue'), 
         },
         {
           path: 'profile',
