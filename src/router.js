@@ -83,13 +83,7 @@ var router = new Router({
           name: 'Dashboard',
           beforeEnter: isActiveSession,
           component: () => import('@/views/app/Dashboard.vue'),
-        },
-        {
-          path: 'licenses',
-          name: 'Licenses',
-          beforeEnter: isActiveSession,
-          component: () => import('@/views/app/licenses/Licenses.vue'), 
-        },
+        },        
         {
           path: 'licenses/new',
           name: 'License Application Form',
@@ -109,16 +103,28 @@ var router = new Router({
           component: () => import('@/views/app/licenses/track/Tracker.vue'), 
         },
         {
+          path: 'licenses/:app_type',
+          name: 'License Applications',
+          beforeEnter: isActiveSession,
+          component: () => import('@/views/app/licenses/Licenses.vue'), 
+        },
+        {
           path: 'payments',
           name: 'Cashier',
           beforeEnter: isActiveSession,
           component: () => import('@/views/app/payments/Cashier.vue'), 
         },
         {
-          path: 'payments/accept',
-          name: 'Accept Payment',
+          path: 'payments/verify',
+          name: 'Payments Verification',
           beforeEnter: isActiveSession,
-          component: () => import('@/views/app/payments/Accept.vue'), 
+          component: () => import('@/views/app/payments/verify.vue'), 
+        },
+        {
+          path: 'payments/accept',
+          name: 'Payments Verification',
+          beforeEnter: isActiveSession,
+          component: () => import('@/views/app/payments/accept.vue'), 
         },
         {
           path: 'profile',

@@ -148,6 +148,10 @@ var actions = {
 
   UPDATE_ACCOUNT: (context, account) => {
     return UserAPI.updateAccount(account)
+  },
+
+  FIND_ACCOUNT:(context, account)=>{
+    return UserAPI.findAccount(account);
   }
 };
 

@@ -73,10 +73,11 @@ export default {
     this.init();
   },
   methods: {
-    init(){
+    init(){     
         this.license.application_type = '0'
         this.license.created_by= this.$store.state.user_session.user.username
-        this.license.encoder= this.$store.state.user_session.user._id
+        this.license.encoder= this.$store.state.user_session.user._id,
+        this.license.encoder_group=this.$store.state.user_session.user.group?this.$store.state.user_session.user.group[0]:null
     },
     home(){
       this.$router.push('/app')
