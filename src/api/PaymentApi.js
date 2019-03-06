@@ -4,8 +4,7 @@ import axios from 'axios';
 
 export default class PaymentAPI {
     constructor(token) {
-        // axios.defaults.baseURL = 'https://fda-services-payments.herokuapp.com';
-        axios.defaults.baseURL = 'https://fda-services.herokuapp.com/v1.0/';
+        axios.defaults.baseURL = axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URI;;
         axios.defaults.headers.common['Content-Type'] = 'application/json'
         // axios.defaults.headers.common['access_token'] = token;
     }
@@ -58,6 +57,7 @@ export default class PaymentAPI {
     }
 
     retrieveRates(app_details){
+        console.log('DETAILS: ' + JSON.stringify(app_details))
         return axios.post('payments/rates/compute', app_details)
     }
 

@@ -35,8 +35,7 @@ export default {
             });
             if(notif.length === 0){
                 this.$store.commit('REMOVE_NOTIFICATION')
-            } 
-            console.log(JSON.stringify(notif))           
+            }         
             return notif;
         }
     }

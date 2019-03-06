@@ -185,8 +185,8 @@ export default {
                 appType:this.license.application_type,
                 productType:this.license.general_info.product_type,
                 primaryActivity:this.license.general_info.primary_activity,
-                declaredCapital:this.license.general_info.primary_capital,
-                date_expiry:new Date()
+                declaredCapital:this.license.general_info.declared_capital,
+                // date_expiry:this.license.
             })
             .then(rates=>{
                 console.log('RATES: ' + JSON.stringify(rates))

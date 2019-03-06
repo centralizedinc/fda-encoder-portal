@@ -57,21 +57,12 @@ var actions = {
             })
         })
     },
-    SAVE_LICENSES(context, license) {
+    SAVE_LICENSE(context, license) {
         return new LicenseAPI(context.rootState.user_session.token).saveLicenses(license);
-        // return new Promise((resolve, reject) => {
-        //     new LicenseAPI(context.rootState.user_session.token).saveLicenses(license, (licenses, err) => {
-        //         if (!err) {
-        //             console.log('actions save licenses store: ' + JSON.stringify(licenses))
-        //             context.commit('SET_FORM', licenses)
-        //             resolve()
-        //         } else {
-        //             console.log("actions save licenses error: " + JSON.stringify(err))
-        //             reject()
-        //         }
-        //     })
-        // })
     },
+    FIND_LICENSE(context, license){
+        return new LicenseAPI(context.rootState.user_session.token).findLicense(license)
+    }, 
     SAVE_MODIFY_LICENSES(context, license) {
         return new Promise((resolve, reject) => {
             new LicenseAPI(context.rootState.user_session.token).modifyLicenses(license, (licenses, err) => {

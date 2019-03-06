@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card-title primary-title>
-            <span class="title font-weight-light">
+            <span class="headline font-weight-light primary--text">
             Warehouse Address 
             </span>
             <!-- <v-spacer></v-spacer> -->

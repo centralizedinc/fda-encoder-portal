@@ -19,8 +19,10 @@
           <v-text-field 
           outline
             name="name" 
-            label="Email/Username" 
-            @keypress.enter="login" id="id"
+            label="Username" 
+            @keypress.enter="login" 
+            id="username"
+            autocomplete="username"
             v-model="credentials.username"
             color="primary"></v-text-field>
           <v-text-field
@@ -28,9 +30,10 @@
             name="name"
             label="Enter your password"
             min="8"
+            autocomplete="current-password"
             @keypress.enter="login"
             :append-icon="value ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (value = !value)"
+            @click:append="() => (value = !value)"
             :type="value ? 'password' : 'text'"
             v-model="credentials.password"
             color="primary"
@@ -83,7 +86,7 @@
           v-model="email"
             name="name"
             label="Email Address"
-            id="id"
+            id="email"
           ></v-text-field>
           <v-divider></v-divider>
         </v-card-text>
@@ -117,7 +120,6 @@ export default {
         .then((res)=>{          
           this.loading = false;
           if(res.isMatch){
-            console.log("RESULT: " + JSON.stringify(res))
             this.$router.push("/app");                        
           }else{
             this.credentials.password = "";

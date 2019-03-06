@@ -81,7 +81,7 @@
         height="80"
       >
         <span class="title font-weight-light">{{page_name}}</span>
-        <v-breadcrumbs divider="/">
+        <v-breadcrumbs divider="/" :items="breadcrumbs">
           <v-breadcrumbs-item
             v-for="(item, index) in breadcrumbs"
             :key="index"
@@ -94,12 +94,6 @@
       </v-sheet>
       <v-spacer></v-spacer>
       <router-view></router-view>
-      <!-- </v-layout> -->
-      <!-- </v-card> -->
-      <!-- <v-divider></v-divider> -->
-      <!-- <transition name="fade"> -->
-      <!-- <router-view></router-view> -->
-      <!-- </transition> -->
       <v-dialog v-model="show_logout" persistent max-width="300" transition="dialog-transition">
         <v-card>
           <v-toolbar dark color="fdaGreen">
@@ -112,7 +106,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn outline color="secondary" dark @click.native="show_logout = false">No</v-btn>
-            <v-btn color="fdaGreen" @click="confirmLogout()">Yes</v-btn>
+            <v-btn color="fdaGreen" dark @click="confirmLogout()">Yes</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

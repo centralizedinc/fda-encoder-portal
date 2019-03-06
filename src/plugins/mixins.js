@@ -1,5 +1,4 @@
 export default {
-
   install(Vue) {
     Vue.mixin({
       methods: {
@@ -24,11 +23,11 @@ export default {
         },
         getProduct(product_id) {
           var product = this.$store.state.product.productType;
-          console.log("all product data: " + JSON.stringify(product))
+          console.log("all product data: " + JSON.stringify(product));
           var index = product.find(x => {
-            return x._id === product_id
-          })
-          return index.name
+            return x._id === product_id;
+          });
+          return index.name;
         },
         formatDate: (date, type) => {
           if (!date) {
@@ -51,7 +50,7 @@ export default {
           var date = new Date(dt);
           var month = date.getMonth() + 1;
           var newDT = date.getFullYear() + "-" + month + "-" + date.getDate();
-          return newDT
+          return newDT;
         },
         // formatDates(dt){
         //   var date = new Date(dt);
@@ -61,11 +60,15 @@ export default {
         //   return newDT
         // },
         formatCurrency: amount => {
-          var parts = amount.toString().split(".");
-          return (
-            parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-            (parts[1] ? "." + parts[1] : "")
-          );
+          if (amount) {
+            var parts = amount.toString().split(".");
+            return (
+              parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+              (parts[1] ? "." + parts[1] : "")
+            );
+          } else {
+            return amount;
+          }
         },
         isEmpty(str) {
           return !str || str === null || str === "";
@@ -84,53 +87,56 @@ export default {
           this.$store.dispatch("LOGOUT");
           this.$router.push("/");
         },
-        requiredRule(value){
-          return !!value || "This is a required field"
+        requiredRule(value) {
+          return !!value || "This is a required field";
         },
-        emailRule(value){          
+        emailRule(value) {
           var validate = false;
           var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           validate = this.isEmpty(value) || !re.test(value);
-          return !validate || 'Invalid Email';
+          return !validate || "Invalid Email";
         },
-        getRegionName(id){          
-          for(var i=0; i<this.$store.state.address.regions.length; i++){
-            var region = this.$store.state.address.regions[i]
-            if(region._id === id){
-              return region.name
+        getRegionName(id) {
+          for (var i = 0; i < this.$store.state.address.regions.length; i++) {
+            var region = this.$store.state.address.regions[i];
+            if (region._id === id) {
+              return region.name;
             }
           }
         },
-        getProvinceName(id){          
-          for(var i=0; i<this.$store.state.address.provinces.length; i++){
-            var province = this.$store.state.address.provinces[i]
-            if(province._id === id){
-              return province.name
+        getProvinceName(id) {
+          for (var i = 0; i < this.$store.state.address.provinces.length; i++) {
+            var province = this.$store.state.address.provinces[i];
+            if (province._id === id) {
+              return province.name;
             }
           }
         },
-        getCityName(id){          
-          for(var i=0; i<this.$store.state.address.cities.length; i++){
-            var city = this.$store.state.address.cities[i]
-            if(city._id === id){
-              return city.name
+        getCityName(id) {
+          for (var i = 0; i < this.$store.state.address.cities.length; i++) {
+            var city = this.$store.state.address.cities[i];
+            if (city._id === id) {
+              return city.name;
             }
           }
         },
-        getApplicationTypeName(id){        
-         if(id === '0'){
-           return 'Initial'
-         }else if( id === '1'){
-           return 'Variation'
-         }else{
-           return 'Renewal'
-         }
+        getApplicationTypeName(id) {
+          if (id === "0") {
+            return "Initial";
+          } else if (id === "1") {
+            return "Variation";
+          } else {
+            return "Renewal";
+          }
         },
-        check_avatar(avatar){
-          return avatar?avatar:'https://avatars.dicebear.com/v2/identicon/'+this.$store.state.user_session.user.username+'.svg'
-        },
+        check_avatar(avatar) {
+          return avatar
+            ? avatar
+            : "https://avatars.dicebear.com/v2/identicon/" +
+                this.$store.state.user_session.user.username +
+                ".svg";
+        }
       }
     });
   }
-
-}
+};

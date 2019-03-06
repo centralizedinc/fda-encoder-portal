@@ -1,7 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://fda-services.herokuapp.com/v1.0";
-// axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URI;
 
 export default class UserAPI {
   constructor(token) {
@@ -107,10 +106,8 @@ export default class UserAPI {
    * @param {Function} cb 
    */
   static changePassword(account, cb) {
-    console.log("calling changePassword...")
     axios.post('public/accounts/auth/recovery/password', account)
       .then(result => {
-        console.log("RESULT: " + JSON.stringify(result))
         if (result.data.success) {
           cb(result.data.model);
         } else {
@@ -133,7 +130,6 @@ export default class UserAPI {
     return new Promise((resolve, reject)=>{
       axios.post('documents/avatars?account_id=' + profile.account._id, profile.avatar)
       .then(result1=>{
-        console.log('SAVING AVATAR: ' + JSON.stringify(result1.data))
         if(result1.data.success){
           profile.account.avatar = result1.data.model
           return axios.post('secured/accounts/admin/' + profile.account._id, profile.account)
@@ -142,7 +138,6 @@ export default class UserAPI {
         }
       })
       .then(result2=>{
-        console.log('SAVING PROFILE: ' + JSON.stringify(result2.data))
         resolve(result2.data)
       })
       .catch(err=>{        

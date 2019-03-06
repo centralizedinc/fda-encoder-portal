@@ -11,7 +11,6 @@
         <v-flex xs12>
           <h3
             class="font-weight-light pb-1 mt-3"
-            style="font-family:Georgia !important; font-size:100vw;"
           >{{title}}</h3>
         </v-flex>
       </v-layout>
@@ -19,15 +18,20 @@
     <v-card-text>
       <v-divider></v-divider>
       <v-layout row wrap>
-        <v-flex xs6>
+        <v-flex xs12>
           <h4 class="subheading">{{description}}</h4>
         </v-flex>
         <v-spacer></v-spacer>
-        <v-flex xs6 style="text-align: right" mt-2>
+        <!-- <v-flex xs6 style="text-align: right" mt-2>
           <span class="subheading">{{details}}</span>
-        </v-flex>
+        </v-flex> -->
       </v-layout>
     </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn outline>apply</v-btn>
+    </v-card-actions>
   </v-card>
   <!-- </v-flex>
   </v-layout>-->

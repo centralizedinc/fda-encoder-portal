@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
-import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 import modules from './modules'
 
@@ -14,14 +14,8 @@ export default new Vuex.Store({
   // plugins: [createPersistedState({
   //   key:'fda-client',
   //   storage: {
-  //     getItem: key => {
-  //       console.log(key)
-  //       console.log("Cookies.getJSON(key): " + Cookies.getJSON(key))
-  //       console.log("Cookies.get(key): " + Cookies.get(key))
-  //       Cookies.getJSON(key)
-  //     } ,
-  //     setItem: (key, value) =>
-  //       Cookies.set(key, value, { expires: 3, secure: false }),
+  //     getItem: key =>  Cookies.getJSON(key),
+  //     setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: false }),
   //     removeItem: key => Cookies.remove(key)
   //   }
   // })]

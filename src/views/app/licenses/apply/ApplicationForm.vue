@@ -19,23 +19,13 @@
                 </v-card-actions>
             </v-card>      
       </v-flex>
-      <v-layout column class="fab-container-bottom">
-        <v-tooltip top>
-          <v-btn small dark slot="activator" fab color="primary" @click="home">
-            <v-icon>home</v-icon>
-          </v-btn>Home
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn small dark slot="activator" fab color="primary" @click="submit()">
-            <v-icon>send</v-icon>
-          </v-btn>Submit
-        </v-tooltip>
-      </v-layout> 
+       <fab-buttons :buttons="[{label:'submit', action:'submit', icon:'send'}]" @submit="submit"></fab-buttons>
     </v-form>   
   </v-layout>
 </template>
 
 <script>
+import FabButtons from "@/components/FabButtons"
 import GeneralInformation from "./GeneralInformation";
 import EstablishmentInformation from "./EstablishmentInformation";
 import ProductLine from "./ProductLine";
@@ -47,6 +37,7 @@ import ScannedDocuments from "./ScannedDocuments";
 
 export default {
   components: {
+    FabButtons,
     GeneralInformation,
     EstablishmentInformation,
     ProductLine,
@@ -84,6 +75,8 @@ export default {
   methods: {
     init(){
         this.license.application_type = '0'
+        this.license.created_by= this.$store.state.user_session.user.username
+        this.license.encoder= this.$store.state.user_session.user._id
     },
     home(){
       this.$router.push('/app')
@@ -92,8 +85,7 @@ export default {
       this.formData = formData;
     },
     submit() {
-      this.license.created_by = 'aabalita'
-      this.$store.dispatch('SAVE_LICENSES', {license:this.license, upload: this.formData})
+      this.$store.dispatch('SAVE_LICENSE', {initial:true, license:this.license, upload: this.formData})
       .then(result=>{
         if(result.success){
           this.$notify({message:'Sucess! CASE#: ' + result.model.case_details.case_no, color:'primary'})

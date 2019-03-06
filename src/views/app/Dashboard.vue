@@ -1,489 +1,234 @@
 <template>
-  <v-layout row wrap>
+  <v-layout row wrap>    
     <v-flex xs12 pa-3>
       <span class="title">Licenses</span>
       <v-divider></v-divider>
     </v-flex>
     
     <v-flex xs3 pa-3>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <span class="title font-weight-light">
-            New License
-          </span>
-        </v-toolbar>
+      <v-card dark style="background:linear-gradient(360deg, #0F901A 0%, #97C76E 100%); box-shadow:0 6px 20px 0 rgba(38, 198, 218, 0.5)">       
+        <v-card-title primary-title>
+                    
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>fas fa-file-contract</v-icon>
+              </v-avatar>
+            </v-flex>
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">New License</span>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
+        <v-divider></v-divider>
         <v-card-text>
-          Apply FDA license for the first time.
+          <p class="subheading">Initial License Application</p>
+          <p>1. Fill-up application form</p>
+          <p>2. Upload appliation requirements</p>
+          <p>3. Receive payment</p>
+          
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="goTo('/app/licenses/new')">Start</v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses')">
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>edit</v-icon>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
     <v-flex xs3 pa-3>
-      <v-card>
-          <v-toolbar dark color="primary">
-          <span class="title font-weight-light">
-            Renew License
-          </span>
-        </v-toolbar>
+      <v-card dark style="background: linear-gradient(360deg, 	#95A523 0%, #B5C25A  100%); box-shadow: 0 6px 20px 0 rgba(77, 182, 172, 0.5)">       
+        <v-card-title primary-title>
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>fas fa-redo</v-icon>
+              </v-avatar>
+            </v-flex>                   
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">License Renewal</span>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-          For expired FDA license. License Renewal Process.
+          <p class="subheading">Renew expired license</p>
+          <p>1. Input License Number to be renew</p>
+          <p>2. Verify license details</p>
+          <p>3. Upload supporting documents</p>
+          <p>4. Accept payment for renewal fee</p>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary">Start</v-btn>          
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-    <v-flex xs3 pa-3>
-      <v-card>        
-        <v-toolbar dark color="primary">
-          <span class="title font-weight-light">
-            License Variation
-          </span>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          For expired FDA license. License Renewal Process.
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary">Start</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-    <v-flex xs3 pa-3>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <span class="title font-weight-light">
-            License Search
-          </span>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          Search and Track License Application
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary">Start</v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/renew')">
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/renew')">
+            <v-icon>edit</v-icon>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
 
-  <!-- Payments -->
-  <v-flex xs12 pa-3>
+    <v-flex xs3 pa-3>
+      <v-card dark style="background:linear-gradient(3600deg, #297373 0%, #5FA391 100%); box-shadow: 0 6px 20px 0 rgba(244, 143, 177, 0.5);">       
+        <v-card-title primary-title>
+                    
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>far fa-edit</v-icon>
+              </v-avatar>
+            </v-flex>
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">License Variation</span>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <p class="subheading">Ammendment on the  existing/active license</p>
+          <p>1. Choose license details to be modified</p>
+          <p>2. Enter new license details</p>
+          <p>3. Upload supporting documents</p>
+          <p>4. Accept payments</p>
+          
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>edit</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+    <v-flex xs3 pa-3>
+      <v-card dark style="background: linear-gradient(360deg, #F1961D 0%, #F58555  100%); box-shadow: 0 6px 20px 0 rgba(255, 111, 0, 0.3)">       
+        <v-card-title primary-title>
+                    
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>fas fa-search</v-icon>
+              </v-avatar>
+            </v-flex>
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">License Search</span>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <p class="subheading">Search for license by case number</p>
+          
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn outline icon @click="goTo('/app/licenses/search')">
+            <v-icon>search</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
+    <v-flex xs12 pa-3>
       <span class="title">Payments</span>
       <v-divider></v-divider>
     </v-flex>
-    
-    <v-flex xs3 pa-1>
-      <v-card>
+
+    <v-flex xs4 pa-3>
+      <v-card dark style="background:linear-gradient(360deg, #0F901A 0%, #97C76E 100%); box-shadow:0 6px 20px 0 rgba(38, 198, 218, 0.5)">       
         <v-card-title primary-title>
-          <span class="title font-weight-light">
-            Accept Payments
-          </span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          Apply FDA license for the first time.
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary">Start</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-    <v-flex xs3 pa-1>
-      <v-card>
-        <v-card-title primary-title>
-          <span class="title font-weight-light">
-            View Payments
-          </span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          For expired FDA license. License Renewal Process.
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary">Start</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-
-
-    <v-flex xs8 pa-3>          
-      <v-card>
-      <v-sheet
-        class="v-sheet--offset mx-auto"
-        style="background: linear-gradient(360deg, rgb(15, 144, 26) 0%, rgb(151, 199, 110) 100%)"
-        elevation="12"
-        max-width="calc(100% - 32px)"
-      >
-        <v-sparkline
-          :labels="labels"
-          :value="value"
-          color="white"
-          line-width="2"
-          smooth="3"
-          padding="16"
-        ></v-sparkline>
-      </v-sheet>
-    
-    <v-card-text class="pt-0">
-      <div class="title font-weight-light mb-2">License Applications</div>
-      <div class="subheading font-weight-light grey--text">As of {{formatDate(new Date())}}</div>
-      <v-divider class="my-2"></v-divider>
-      <v-icon
-        class="mr-2"
-        small
-      >
-        time
-      </v-icon>
-      <span class="caption grey--text font-weight-light">last registration 26 minutes ago</span>
-    </v-card-text>
-  </v-card>
-</v-flex>
-    <v-flex xs12 md6 lg3 pa-2>
-      <v-card>
-        <v-tooltip top>
-          <v-btn
-            slot="activator"
-            color="success"
-            dark
-            absolute
-            top
-            right
-            fab
-            small
-            @click="$router.push('/app/licenses')"
-          >
-            <v-icon small>call_made</v-icon>
-          </v-btn>Go to Licenses
-        </v-tooltip>
-
-        <dashboard-card
-          class="dcard"
-          icon="fas fa-file-contract"
-          title="Licenses"
-          description="Count"
-          details="1"
-          color="primary"
-        ></dashboard-card>
-      </v-card>
-    </v-flex>
-    <v-flex xs12 md6 lg3 pa-2>
-      <v-card>
-        <v-tooltip top>
-          <v-btn
-            slot="activator"
-            color="success"
-            dark
-            absolute
-            top
-            right
-            fab
-            small
-            @click="$router.push('/app/certificates')"
-          >
-            <v-icon>call_made</v-icon>
-          </v-btn>Go to Certificates
-        </v-tooltip>
-        <dashboard-card
-          class="dcard"
-          icon="fas fa-certificate"
-          title="Certificates"
-          description="Count"
-          details="9"
-          color="fdaGold"
-        ></dashboard-card>
-      </v-card>
-    </v-flex>
-    <v-flex xs12 md6 lg3 pa-2>
-      <v-card>
-        <v-tooltip top>
-          <v-btn
-            slot="activator"
-            color="success"
-            dark
-            absolute
-            top
-            right
-            fab
-            small
-            @click="$router.push('/app/notification')"
-          >
-            <v-icon>call_made</v-icon>
-          </v-btn>Go to Product Notification
-        </v-tooltip>
-        <dashboard-card
-          class="dcard"
-          icon="fas fa-file-invoice"
-          title="Notification"
-          description="Count"
-          details="2"
-          color="fdaOrange"
-        ></dashboard-card>
-      </v-card>
-    </v-flex>
-    <v-flex xs12 md6 lg3 pa-2>
-      <v-card>
-        <v-tooltip top>
-          <v-btn
-            slot="activator"
-            color="success"
-            dark
-            absolute
-            top
-            right
-            fab
-            small
-            @click="$router.push('/app/payments')"
-          >
-            <v-icon>call_made</v-icon>
-          </v-btn>Go to Payments
-        </v-tooltip>
-        <dashboard-card
-          class="dcard"
-          icon="fas fa-credit-card fa-xs"
-          title="Payments"
-          description="Count"
-          details="0"
-          color="fdaBlueGreen"
-        ></dashboard-card>
-      </v-card>
-    </v-flex>
-    <!-- <v-flex xs12 md6 lg4 pa-2>
-      <v-card>
-        <v-toolbar dark color="#00bfa5">
-          <span class="subheadline font-weight-light">License Applications</span>
-          <v-btn color="success" dark absolute bottom right fab small>
-            <v-icon>call_made</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text>
-          <v-list two-line subheader>
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title>CASE-123-45656</v-list-tile-title>
-                <v-list-tile-sub-title>Application</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-            <v-divider></v-divider>
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title>CASE-123-45656</v-list-tile-title>
-                <v-list-tile-sub-title>Application</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-          </v-list>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs12 md6 lg4 pa-2>
-      <v-card>
-        <v-toolbar dark color="#ff6e40">
-          <span class="subheadline font-weight-light">Certificates Applications</span>
-          <v-btn color="warning" dark absolute bottom right fab small>
-            <v-icon>call_made</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text>
-          <v-list two-line subheader>
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title>CASE-123-45656</v-list-tile-title>
-                <v-list-tile-sub-title>Application</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-            <v-divider></v-divider>
-            <v-list-tile>
-              <v-list-tile-content>
-                <v-list-tile-title>CASE-123-45656</v-list-tile-title>
-                <v-list-tile-sub-title>Application</v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-btn icon ripple>
-                  <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-              </v-list-tile-action>
-            </v-list-tile>
-            <v-divider></v-divider>
-          </v-list>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-    <v-flex xs12 md6 lg4 pa-2>
-      <v-card>
-        <v-toolbar
-          extended
-          style="background:url('https://pixinvent.com/free-materialize-material-design-admin-template/images/gallary/12.png') no-repeat center"
-        >
-          <v-btn color="error" dark absolute bottom right fab small>
-            <v-icon>edit</v-icon>
-          </v-btn>
-
-          <v-btn dark absolute bottom left fab color="white">
-            <v-avatar>
-              <img src="http://i.pravatar.cc/400" alt="alt" size="400">
-            </v-avatar>
-          </v-btn>
-        </v-toolbar>
-      
-        <v-card-text>
-          <v-layout row wrap mt-4>
-            <v-flex xs12>
-              <span class="title font-width-light">Ariel Balita</span>
+                    
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>fas fa-cash-register</v-icon>
+              </v-avatar>
             </v-flex>
-            <v-flex xs12 pa-1>
-              <v-icon small>email</v-icon>
-              <span class="subheader font-width-light">ariel.a.balita@gmail.com</span>
-            </v-flex>
-            <v-flex xs12 pa-1>
-              <v-icon small>phone</v-icon>
-              <span class="subheader font-width-light">+63 917 709 4930</span>
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">Accept Payments</span>
             </v-flex>
           </v-layout>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <p class="subheading">Pay for Application Fees</p>
+          <p>1. Search for Case Number</p>
+          <p>2. Verify Application details</p>
+          <p>3. Accept payment</p>
+          
         </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>edit</v-icon>
+          </v-btn>
+        </v-card-actions>
       </v-card>
-    </v-flex>-->
-    <v-flex xs12 mt-5>
-      <div class="headline">Reference</div>
     </v-flex>
-    <!-- Calendar -->
-    <v-layout row wrap>
-      <v-flex ml-2 class="my-3">
-        <v-card class="dcard" width="calc(100% - 10px)">
-          <v-date-picker
-            width="calc(100% - 10px)"
-            v-model="calendar"
-            :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
-            :events="functionEvents"
-          ></v-date-picker>
-        </v-card>
-      </v-flex>
-      <!-- USer Activity -->
-      <v-flex mt-3 ml-2>
-        <v-card width="calc(100% - 10px)" class="dcard" height="410">
-          <v-toolbar
-            width="calc(100% - 10px)"
-            style="background: linear-gradient(45deg, #e0c71c 0%, #e9d758 100%);"
-          >
-            <v-toolbar-title>User Activity</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-          </v-toolbar>
 
-          <v-list two-line width>
-            <template v-for="(item, index) in items">
-              <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-              <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
-              <v-list-tile v-else avatar :key="index">
-                <v-list-tile-avatar>
-                  <img :src="item.avatar">
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                  <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </template>
-          </v-list>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn flat block color="success">view more</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-flex xs4 pa-3>
+      <v-card dark style="background: linear-gradient(360deg, 	#95A523 0%, #B5C25A  100%); box-shadow: 0 6px 20px 0 rgba(77, 182, 172, 0.5)">       
+        <v-card-title primary-title>
+                    
+          <v-layout row wrap>
+            <v-flex xs3>
+               <v-avatar size="50" color="transparent">
+                <v-icon large>fas fa-credit-card</v-icon>
+              </v-avatar>
+            </v-flex>
+            <v-flex xs9 mt-2>
+              <span class="headline font-weight-regular">Payment Verification</span>
+            </v-flex>
+          </v-layout>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <p class="subheading">Verify Payment Details</p>
+          <p>1. Search for Payment Reference Number or Case Number</p>
+          <p>2. Review Payment Details</p>
+          
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>search</v-icon>
+          </v-btn>
+          <v-btn outline icon @click="goTo('/app/licenses/new')">
+            <v-icon>edit</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+
   </v-layout>
 </template>
 
 <script>
-import DashboardCard from "@/components/DashboardCards";
 export default {
-  components: { DashboardCard },
   data: () => ({
-    labels: [
-        '12am',
-        '3am',
-        '6am',
-        '9am',
-        '12pm',
-        '3pm',
-        '6pm',
-        '9pm'
-      ],
-      value: [
-        200,
-        675,
-        410,
-        390,
-        310,
-        460,
-        250,
-        240
-      ],
-    date2: new Date().toISOString().substr(0, 10),
-    items: [
-      { header: "Today" },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-        title: "Authorized Officer",
-        subtitle:
-          "<span class='text--primary'>Chz Quiocho</span> &mdash; Applied Certificate for Food"
-      },
-      { divider: true, inset: true },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-        title: "Cashier ",
-        subtitle:
-          "<span class='text--primary'>Godfrey Rivera</span> &mdash; accepted License Application "
-      },
-      { divider: true, inset: true },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        title: "Authorized Officer",
-        subtitle:
-          "<span class='text--primary'>Chz Quiocho</span> &mdash; Renewed License 0001111"
-      }
-    ]
+    
   }),
   methods: {
     goTo(nav){
       this.$router.push(nav)
-    },
-    functionEvents(date) {
-      const [, , day] = date.split("-");
-      if ([12, 17, 28].includes(parseInt(day, 10))) return true;
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ["red", "#00f"];
-      return false;
     }
   }
 };

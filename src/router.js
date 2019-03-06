@@ -27,9 +27,7 @@ function isAuthorized(to, from, next) {
     })
 }
 
-function isAuthenticated(to, from, next) {
-  console.log('isAuth: ' + store.state.user_session.isAuthenticated);
-  
+function isAuthenticated(to, from, next) {  
   if (store.state.user_session.isAuthenticated) {
     next('/app');
   } else {
@@ -83,26 +81,43 @@ var router = new Router({
       children: [{
           path: '',
           name: 'Dashboard',
+          beforeEnter: isActiveSession,
           component: () => import('@/views/app/Dashboard.vue'),
         },
         {
           path: 'licenses',
           name: 'Licenses',
+          beforeEnter: isActiveSession,
           component: () => import('@/views/app/licenses/Licenses.vue'), 
         },
         {
           path: 'licenses/new',
           name: 'License Application Form',
+          beforeEnter: isActiveSession,
           component: () => import('@/views/app/licenses/apply/ApplicationForm.vue'), 
+        },
+        {
+          path: 'licenses/renew',
+          name: 'License Renewal',
+          beforeEnter:isActiveSession,
+          component: () => import('@/views/app/licenses/renew/Renewal.vue'), 
+        },
+        {
+          path: 'licenses/search',
+          name: 'Search License',
+          beforeEnter: isActiveSession,
+          component: () => import('@/views/app/licenses/track/Tracker.vue'), 
         },
         {
           path: 'payments',
           name: 'Cashier',
+          beforeEnter: isActiveSession,
           component: () => import('@/views/app/payments/Cashier.vue'), 
         },
         {
           path: 'profile',
           name: 'Profile',
+          beforeEnter: isActiveSession,
           component: () => import('@/views/app/Profile.vue'), 
         }
       ]

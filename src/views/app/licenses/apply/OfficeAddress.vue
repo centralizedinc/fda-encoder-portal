@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card-title primary-title>
-            <span class="title font-weight-light">Office Address</span>
+            <span class="headline font-weight-light primary--text">Office Address</span>
         </v-card-title> 
         <v-divider></v-divider>
         <v-card-text>

@@ -1,6 +1,3 @@
-// import setAuthToken from '@/axios-config.js'
-// var jwt = require('jsonwebtoken')
-
 import RegistrationAPI from "@/api/RegistrationAPI";
 import UserAPI from "@/api/UserAPI";
 
@@ -18,7 +15,6 @@ const mutations = {
     state.token = payload.token;
     state.isAuthenticated = payload.isMatch;
     new UserAPI(payload.token);
-    console.log("PAYLOAD: " + JSON.stringify(payload))
   },
   LOGOUT: function (state) {
     state.user = {};
@@ -88,6 +84,7 @@ var actions = {
       UserAPI.login(credentials, (res, err) => {
         if (!err) {
           context.commit('LOGIN', res);
+          context.commit('INIT', res.token)
           resolve(res)
         } else {
           console.log(JSON.stringify(err));
@@ -138,7 +135,6 @@ var actions = {
    */
   CHANGE_PASSWORD: function (context, account) {
     return new Promise((resolve, reject) => {
-      console.log('Calling Change Password!')
       UserAPI.changePassword(account, (res, err) => {
         if (!err) {
           resolve(res)
