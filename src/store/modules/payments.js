@@ -1,11 +1,12 @@
 import PaymentAPI from '../../api/PaymentApi';
 
-
-const state = {
+const initialState = {
     credit_card: null,
     cvv: null,
     expiry: null
 }
+
+const state = initialState
 
 const mutations = {
     CREDIT_CARD(state, form){
@@ -16,6 +17,9 @@ const mutations = {
     },
     EXPIRY(state, form){
         state.expiry = form
+    },
+    CLEAR(state){
+        Object.assign(state, initialState);    
     }
 }
 

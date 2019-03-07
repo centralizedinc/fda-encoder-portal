@@ -1,10 +1,11 @@
 import ReferenceAPI from '@/api/ReferenceAPI'
 
-const state = {
+const initialState = {
     regions:[],
     provinces:[],
     cities:[]
 }
+const state = initialState;
 
 const mutations = {
     SET_REGIONS: function(state, payload){
@@ -15,6 +16,9 @@ const mutations = {
     },
     SET_CITIES: function(state, payload){
         state.cities = payload
+    },
+    CLEAR(state){
+        Object.assign(state, initialState);
     }
 }
 

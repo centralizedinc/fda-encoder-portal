@@ -36,8 +36,9 @@
 
       <v-menu offset-y>
         <v-btn icon slot="activator">
-          <v-avatar size="40">
-            <img :src="check_avatar(user.avatar.location)" alt="alt">
+          <v-avatar size="40" color="teal">
+            <img v-if="user.avatar" :src="check_avatar(user.avatar.location)" alt="alt">
+            <span v-else>{{user.first_name.substring(0,1) + user.last_name.substring(0,1)}}</span>
           </v-avatar>
         </v-btn>
         <v-list two-line subheader>

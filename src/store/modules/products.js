@@ -1,13 +1,14 @@
 
 import ProductApi from '../../api/ProductApi';
 
-const state = {
+const initialState = {
     productType: [],
     primaryActivity: [],
     secondaryActivity: [],
     additional: [],
     declared: []
 }
+const state = initialState
 
 const mutations = {
     SET_PRODUCT_TYPE(state, licenses){
@@ -25,6 +26,9 @@ const mutations = {
     SET_DECLARED(state, primaryActivity){
         state.declared = primaryActivity;
     },
+    CLEAR(state){
+        Object.assign(state, initialState);    
+    }
 }
 
 var actions = {

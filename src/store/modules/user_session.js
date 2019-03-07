@@ -99,7 +99,8 @@ var actions = {
    */
   LOGOUT: (context) => {
     context.commit('LOGOUT')
-    context.commit('PICKUP_BREADCRUMBS')
+    context.commit('CLEAR')
+    
   },
 
   /**

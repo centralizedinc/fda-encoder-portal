@@ -6,11 +6,11 @@ const state = {
 }
 
 const mutations = {
-    SET_TASKS(state, task) {
-        console.log("mutations")
+    SET_TASKS(state, task) {        
+        state.tasks = task;        
+    },
+    CLEAR(state){
         state.tasks = null;
-        state.tasks = task;
-        console.log("mutations state: " + JSON.stringify(state.tasks))
     }
 }
 

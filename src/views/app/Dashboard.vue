@@ -147,7 +147,7 @@
       <v-divider></v-divider>
     </v-flex>
 
-    <v-flex xs4 pa-3>
+    <v-flex xs3 pa-3>
       <v-card dark style="background:linear-gradient(360deg, #0F901A 0%, #97C76E 100%); box-shadow:0 6px 20px 0 rgba(38, 198, 218, 0.5)">       
         <v-card-title primary-title>
                     
@@ -183,7 +183,7 @@
       </v-card>
     </v-flex>
 
-    <v-flex xs4 pa-3>
+    <v-flex xs3 pa-3>
       <v-card dark style="background: linear-gradient(360deg, 	#95A523 0%, #B5C25A  100%); box-shadow: 0 6px 20px 0 rgba(77, 182, 172, 0.5)">       
         <v-card-title primary-title>
                     
@@ -194,7 +194,7 @@
               </v-avatar>
             </v-flex>
             <v-flex xs9 mt-2>
-              <span class="headline font-weight-regular">Payment Verification</span>
+              <span class="headline font-weight-regular">Verify Payments</span>
             </v-flex>
           </v-layout>
         </v-card-title>

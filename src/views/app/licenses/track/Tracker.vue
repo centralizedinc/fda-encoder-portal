@@ -52,6 +52,28 @@
                      <template slot="items" slot-scope="props">
                         <td>{{ getTask(props.item.task_id) }}</td>
                         <td>{{ getActivityStatus(props.item.status) }}</td>
+                        <td>
+                            <v-menu offset-y>
+                                <a @click="viewEncoder(props.item.assigned_user)" slot="activator">
+                                {{ props.item.assigned_user }}
+                                </a>
+                                <v-card>
+                                <v-card-text v-if="!isLoading">
+                                    <p class="font-weight-thin">Username: {{user.username}}</p>
+                                    <p class="font-weight-thin">First Name: {{user.first_name}}</p>
+                                    <p class="font-weight-thin">Last Name: {{user.last_name}}</p>
+                                    <p class="font-weight-thin">Email: {{user.email}}</p>
+                                </v-card-text>
+                                <v-card-text v-else>
+                                    <v-layout align-center justify-center>
+                                    <v-flex xs12>
+                                        <v-progress-circular  color="primary" indeterminate></v-progress-circular>
+                                    </v-flex>                      
+                                    </v-layout>                    
+                                </v-card-text>                  
+                                </v-card>
+                            </v-menu> 
+                        </td>
                         <td>{{ formatDate(props.item.date_completed) }}</td>
                         <td>{{ props.item.remarks }}</td>
                     </template>
@@ -80,12 +102,14 @@ export default {
         return{
             isLoading:false,
             case_no: '',
+            user:{},
             case_details:{
                 activities:[]
             },
             headers:[
                 {text:'Task'},
                 {text: 'Status'},
+                {text: 'Processed By'},
                 {text: 'Date Completed'},
                 {text: 'Remarks'}
             ]
@@ -100,6 +124,7 @@ export default {
                 if(result.data.success){
                     this.case_details = result.data.model;
                 }else{
+                    console.log(JSON.stringify(result.data))
                    this.$notifyError(result.data.errors) 
                 }                
             })
@@ -109,6 +134,19 @@ export default {
                 this.$notifyError(err)
             })
         },
+        viewEncoder(id){
+            this.isLoading = true;
+            this.$store.dispatch('FIND_ACCOUNT', id)
+            .then(account=>{
+                this.user = account.data.model;
+                this.isLoading = false;
+            })
+            .catch(err=>{
+                console.log(err)
+                this.isLoading = true;
+                this.$notifyError(err)
+            })
+        }
     }
 
 }

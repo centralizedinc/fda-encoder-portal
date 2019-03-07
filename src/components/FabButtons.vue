@@ -2,7 +2,7 @@
     <v-layout column class="fab-container-bottom">
         <v-tooltip top>
           <v-btn small dark slot="activator" fab color="secondary" @click="home">
-            <v-icon>home</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-btn>Home
         </v-tooltip>
         <v-tooltip top v-for="button in buttons" :key="button.label">
