@@ -40,7 +40,7 @@
             <img v-if="user.avatar" :src="check_avatar(user.avatar.location)" alt="alt">
             <span v-else>{{user.first_name.substring(0,1) + user.last_name.substring(0,1)}}</span>
           </v-avatar>
-        </v-btn> -->
+        </v-btn>
         <v-list two-line subheader>
           <v-list-tile avatar @click="goTo('/app/profile')">
             <v-list-tile-content>
@@ -49,7 +49,7 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-divider></v-divider>
-          <v-list-tile avatar @click="goTo('/app/password')">
+          <!-- <v-list-tile avatar @click="goTo('/app/password')">
             <v-list-tile-content>
               <v-list-tile-title class="body-2 font-weight-light">Password Settings</v-list-tile-title>
               <v-list-tile-sub-title
@@ -57,7 +57,7 @@
               >Change Password and Security Settings</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-divider></v-divider>
+          <v-divider></v-divider> -->
           <v-list-tile avatar @click="showLogout">
             <v-list-tile-content>
               <v-list-tile-title class="body-2 font-weight-light">Logout</v-list-tile-title>

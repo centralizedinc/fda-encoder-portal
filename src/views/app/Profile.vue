@@ -11,37 +11,51 @@
                         outline
                         name="name"
                         label="Last Name"
-                        id="id"
+                        id="lname"
                         v-model="account.last_name"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
                         label="First Name"
-                        id="id"
+                        id="fname"
                         v-model="account.first_name"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
                         label="Middle Name"
-                        id="id"
+                        id="mname"
                         v-model="account.middle_name"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
-                        label="Email"
-                        id="id"
-                        v-model="account.email"
+                        label="Group"
+                        id="group"
+                        v-model="account.group"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
-                        label="Contact Number"
-                        id="id"
-                        v-model="account.lastname"
+                        label="Role"
+                        id="role"
+                        v-model="account.role"
                     ></v-text-field>
+                    <v-text-field
+                        outline
+                        name="name"
+                        label="Email"
+                        id="email"
+                        v-model="account.email"
+                    ></v-text-field>
+                    <!-- <v-text-field
+                        outline
+                        name="name"
+                        label="Contact Number"
+                        id="contact"
+                        v-model="account.contactNumber"
+                    ></v-text-field> -->
                 </v-card-text>
             </v-card>
         </v-flex>
@@ -60,7 +74,6 @@
                             @change="onFilePicked"
                             accept="image/*"
                         >
-                        <!-- <v-btn icon slot="activator"> -->
                             <a @click="$refs.image.click()">
                         <v-avatar size="150">
                             <v-img :src="check_avatar(account.avatar.location)" alt="alt">
@@ -76,14 +89,6 @@
                             </v-img>
                         </v-avatar>
                             </a>
-                        <!-- </v-btn> -->
-                        <!-- <v-btn icon slot="activator">
-                           <v-avatar
-                                size="150"
-                            >
-                                <img src="http://i.pravatar.cc/200" alt="alt">
-                            </v-avatar>
-                        </v-btn> -->
                     
                     </v-layout>
                 <v-card-text>
@@ -92,50 +97,43 @@
                         outline
                         name="name"
                         label="Username"
-                        id="id"
+                        id="username"
                         v-model="account.username"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
                         label="New Password"
-                        id="id"
+                        id="new-password"
                         type="password"
                     ></v-text-field>
                     <v-text-field
                         outline
                         name="name"
                         label="Confirm Password"
-                        id="id"
+                        id="confirm-password"
                         type="password"
                     ></v-text-field>
                 </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="save()">Save</v-btn>
+                </v-card-actions>
             </v-card>
         </v-flex>
-        <!-- <v-spacer></v-spacer>
-        <v-btn style="bottom: 40px"
-        color="blue darken-2"
-        dark
-        fab
-        bottom
-        right
-        absolute
-      >
-        <v-icon>save</v-icon>
-      </v-btn> -->
-      <v-layout column class="fab-container-bottom">
-          <v-tooltip top>
-              <v-btn slot="activator" fab color="primary" @click="save()">
-                <v-icon>save</v-icon>
-            </v-btn>
-            Save Changes
-          </v-tooltip>      
-    </v-layout>
+        <fab-buttons 
+            :buttons="[{label:'save', action:'action', icon:'save'}]"
+            @save="save"></fab-buttons>
     </v-layout>
 </template>
 
 <script>
+import FabButtons from '@/components/FabButtons'
 export default {
+    components:{
+        FabButtons
+    },
     data(){
         return{
             account:{},

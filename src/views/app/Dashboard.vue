@@ -217,18 +217,32 @@
         </v-card-actions>
       </v-card>
     </v-flex>
-
+    <fab-buttons 
+      :hide-default="true" 
+      :buttons="[{label:'profile', action:'profile', icon:'far fa-user-circle'},
+      {label:'logout', action:'logout', icon:'fas fa-sign-out-alt'}]"
+      @profile="goTo('/app/profile')"
+      @logout="confirmLogout"></fab-buttons>
   </v-layout>
 </template>
 
 <script>
+import FabButtons from '@/components/FabButtons'
+
 export default {
+  components:{
+    FabButtons
+  },
   data: () => ({
     
   }),
   methods: {
     goTo(nav){
       this.$router.push(nav)
+    },
+    confirmLogout() {
+      this.$store.dispatch("LOGOUT");
+      this.$router.push("/");
     }
   }
 };
