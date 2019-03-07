@@ -2,9 +2,9 @@
   <v-layout row wrap>
     <v-flex xs12 pa-3>
       <v-card v-if="step_curr === 1">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Verify Payment Details</span>
-        </v-card-title>
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-thin">Verify Payment Details</span>
+        </v-toolbar>
         <v-divider></v-divider>
         <v-card-text>
           <v-text-field
@@ -22,11 +22,11 @@
         </v-card-actions>
       </v-card>
 
-      <!-- Lincense Details -->
+      <!-- Review Payment Details -->
       <v-card v-if="step_curr === 2">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Review Payment Details</span>
-        </v-card-title>
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-thin">Review Payment Details</span>
+        </v-toolbar>
         <v-divider></v-divider>
         <v-flex xs12 sm6 offset-sm3>
           <v-card>
@@ -35,6 +35,7 @@
                 <v-list-tile-content>
                   <v-list-tile-title v-text="item.title"></v-list-tile-title>
                 </v-list-tile-content>
+                <v-spacer></v-spacer>
                 <v-list-tile-content>
                   <v-list-tile-title v-text="item.label"></v-list-tile-title>
                 </v-list-tile-content>
@@ -48,37 +49,17 @@
           <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
         </v-card-actions>
       </v-card>
-
-      <!-- Scanned Upload -->
-      <!-- <v-card v-if="step_curr === 3">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Test Validate</span>
-        </v-card-title>
-       <v-divider></v-divider>
-        <v-card-title primary-title>
-          <span class="title font-weight-thin primary--text">Test Validate display</span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="submit">Close</v-btn>
-        </v-card-actions>
-      </v-card>-->
-      <!-- <cashier v-if="step_curr === 4"></cashier> -->
     </v-flex>
-    <!-- <fab-buttons :buttons="fab" @submit="submit"></fab-buttons> -->
   </v-layout>
 </template>
 
 <script>
 import FabButtons from "@/components/FabButtons";
 import Uploader from "@/components/Uploader";
-// import Cashier from "@/views/app/payments/Cashier";
 
 export default {
   components: {
     Uploader,
-    // Cashier,
     FabButtons
   },
 
