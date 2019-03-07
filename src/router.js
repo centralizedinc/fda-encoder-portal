@@ -64,6 +64,7 @@ var router = new Router({
       children: [{
           path: '',
           name: 'Login',
+          beforeEnter:isAuthenticated,
           component: () => import('@/views/Login.vue')
         },
         {

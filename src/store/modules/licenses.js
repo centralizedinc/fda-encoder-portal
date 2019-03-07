@@ -6,7 +6,7 @@ import {
     resolve
 } from 'url';
 
-const state = {
+const initialState = {
     LicenseAPI: null,
     licenses: [],    
     form: null,
@@ -14,6 +14,8 @@ const state = {
     case:null,
     license:null
 }
+
+const state = initialState;
 
 const mutations = {
     SET_LICENSE(state, data){
@@ -31,6 +33,9 @@ const mutations = {
     },
     UPLOADED_DATA(state, form) {
         state.uploaded = form
+    },
+    CLEAR(state){
+        Object.assign(state, initialState);
     }
 }   
 

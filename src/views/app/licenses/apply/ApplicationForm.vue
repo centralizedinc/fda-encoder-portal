@@ -19,7 +19,7 @@
                 </v-card-actions>
             </v-card>      
       </v-flex>
-       <fab-buttons :buttons="[{label:'submit', action:'submit', icon:'send'}]" @submit="submit"></fab-buttons>
+       <fab-buttons :buttons="[{label:'submit', action:'submit', icon:'save'}]" @submit="submit"></fab-buttons>
     </v-form>   
   </v-layout>
 </template>

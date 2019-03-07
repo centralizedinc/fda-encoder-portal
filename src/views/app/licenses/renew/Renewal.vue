@@ -161,7 +161,7 @@
         </v-card>
         <cashier v-if="step_curr === 4"></cashier>
         </v-flex>
-        <fab-buttons :buttons="fab" @submit="submit"></fab-buttons>
+        <fab-buttons :buttons="fab" @submit="submit" @back="back" @next="next"></fab-buttons>
     </v-layout>
 </template>
 
@@ -186,7 +186,7 @@ export default {
       fab:[
           {label:"back", action:"back", icon:"arrow_back"},
           {label:"next", action:"next", icon:"arrow_forward"},
-          {label:"submit", action:"submit", icon:"send"}
+          {label:"submit", action:"submit", icon:"save"}
       ]
     };
   },
@@ -227,6 +227,12 @@ export default {
     },
     upload(data) {
       this.formData = data;
+    },
+    next(){
+        this.step_curr++;
+    }, 
+    back(){
+        this.step_curr--;
     },
     submit() {
         this.isLoading = true;
