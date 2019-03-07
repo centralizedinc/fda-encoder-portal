@@ -40,7 +40,7 @@
             <img v-if="user.avatar" :src="check_avatar(user.avatar.location)" alt="alt">
             <span v-else>{{user.first_name.substring(0,1) + user.last_name.substring(0,1)}}</span>
           </v-avatar>
-        </v-btn>
+        </v-btn> -->
         <v-list two-line subheader>
           <v-list-tile avatar @click="goTo('/app/profile')">
             <v-list-tile-content>
