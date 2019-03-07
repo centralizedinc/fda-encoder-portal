@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       step_curr: 1,
-      license: {},
+      case_details: {},
       isLoading: false,
       formData: null,
       items: [
@@ -122,24 +122,26 @@ export default {
     },
     submit() {}
   },
-  search(){
-            this.isLoading = true;
-            this.$store.dispatch('FIND_CASE',this.case_no)
-            .then(result=>{
-                this.isLoading = false;
-                if(result.data.success){
-                    this.case_details = result.data.model;
-                }else{
-                    console.log(JSON.stringify(result.data))
-                   this.$notifyError(result.data.errors) 
-                }                
-            })
-            .catch(err=>{
-                this.isLoading = false;
-                console.log(err)
-                this.$notifyError(err)
-            })
-        },
+  search() {
+    // console.log('###########FIND:case_no: ' + JSON.stringify(this.case_no));
+    this.isLoading = true;
+    this.$store
+      .dispatch("FIND_CASE", this.case_no)
+      .then(result => {
+        this.isLoading = false;
+        if (result.data.success) {
+          this.case_details = result.data.model;
+        } else {
+          console.log(JSON.stringify(result.data));
+          this.$notifyError(result.data.errors);
+        }
+      })
+      .catch(err => {
+        this.isLoading = false;
+        console.log(err);
+        this.$notifyError(err);
+      });
+  }
 };
 </script>
 
