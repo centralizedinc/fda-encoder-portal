@@ -59,11 +59,11 @@
           <span class="title font-weight-thin primary--text">Summary of payment</span>
         </v-card-title>
         <v-divider></v-divider>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-data-table :headers="headers" :items="transactions" hide-actions class="elevation-1">
+        <v-flex xs12 sm10 offset-sm1>
+          <v-data-table :headers="headers" :items="transactions" class="elevation-1">
             <template slot="items" slot-scope="props">
-              <td class="text-xs-right">{{ props.item.transaction }}</td>
-              <td class="text-xs-right">{{ props.item.details }}</td>
+              <td>{{ props.item.transaction }}</td>
+              <td>{{ props.item.details }}</td>
             </template>
           </v-data-table>
         </v-flex>
