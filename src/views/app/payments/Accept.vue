@@ -185,9 +185,27 @@ export default {
     upload(data) {
       this.formData = data;
     },
-    submit() {
-      this.step_curr++;
-    }
+    // submit() {
+    //   this.step_curr++;
+    // }
+    search(){
+            this.isLoading = true;
+            this.$store.dispatch('FIND_ENCODED_CASE',this.case_no)
+            .then(result=>{
+                this.isLoading = false;
+                if(result.data.success){
+                    this.case_details = result.data.model;
+                }else{
+                    console.log(JSON.stringify(result.data))
+                   this.$notifyError(result.data.errors) 
+                }                
+            })
+            .catch(err=>{
+                this.isLoading = false;
+                console.log(err)
+                this.$notifyError(err)
+            })
+        },
   }
 };
 </script>
