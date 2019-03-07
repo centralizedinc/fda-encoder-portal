@@ -75,7 +75,7 @@ export default {
           label: "New License"
         },
         {
-          title: "Case Number:",
+          title: "Case/Reference Number:",
           label: "123avc121"
         },
         {
@@ -95,8 +95,8 @@ export default {
           label: "1000"
         },
         {
-          title: "Mode of Payment:",
-          label: "1000"
+          title: "Status:",
+          label: "Paid"
         }
       ],
       fab: [

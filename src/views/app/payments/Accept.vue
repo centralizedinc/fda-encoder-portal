@@ -60,18 +60,12 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item.title">
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.label"></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
+          <v-data-table :headers="headers" :items="transactions" hide-actions class="elevation-1">
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-right">{{ props.item.transaction }}</td>
+              <td class="text-xs-right">{{ props.item.details }}</td>
+            </template>
+          </v-data-table>
         </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
@@ -86,13 +80,25 @@
           <span class="headline font-weight-thin">Payments</span>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-card-title primary-title>
-          <span class="title font-weight-thin primary--text">Payment</span>
-        </v-card-title>
+        <v-flex xs12 sm6 offset-sm3>
+          <v-card>
+            <v-list>
+              <v-list-tile v-for="item in items" :key="item.title">
+                <v-list-tile-content>
+                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
+                </v-list-tile-content>
+                <v-spacer></v-spacer>
+                <v-list-tile-content>
+                  <v-list-tile-title v-text="item.label"></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="submit">Close</v-btn>
+          <v-btn color="primary" @click="submit">Proceed to Payment</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -121,15 +127,27 @@ export default {
         { label: "next", action: "next", icon: "arrow_forward" },
         { label: "submit", action: "submit", icon: "send" }
       ],
+      headers: [
+        {
+          text: "Application Type",
+          value: "transaction"
+        },
+        {
+          text: "Case/Reference Number",
+          value: "details"
+        }
+      ],
+      transactions: [
+        {
+          transaction: "New License",
+          details: "123ABC121"
+        },
+        {
+          transaction: "Certifictae",
+          details: "ABC3214"
+        }
+      ],
       items: [
-        {
-          title: "Application Type:",
-          label: "New License"
-        },
-        {
-          title: "Case Number:",
-          label: "123avc121"
-        },
         {
           title: "Fee:",
           label: "1000"
@@ -147,8 +165,8 @@ export default {
           label: "1000"
         },
         {
-          title: "Mode of Payment:",
-          label: "1000"
+          title: "Status:",
+          label: "Paid"
         }
       ]
     };
