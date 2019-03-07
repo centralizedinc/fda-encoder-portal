@@ -185,6 +185,7 @@ export default {
     upload(data) {
       this.formData = data;
     },
+<<<<<<< HEAD
     // submit() {
     //   this.step_curr++;
     // }
@@ -216,6 +217,23 @@ export default {
         .then(result => {
           console.log("####### LAST RESULT ######" + JSON.stringify(result));
           this.step_curr++;
+=======
+    submit() {
+      this.step_curr++;
+    },
+    search() {
+      this.isLoading = true;
+      this.$store
+        .dispatch("FIND_ENCODED_CASE", this.case_no)
+        .then(result => {
+          this.isLoading = false;
+          if (result.data.success) {
+            this.case_details = result.data.model;
+          } else {
+            console.log(JSON.stringify(result.data));
+            this.$notifyError(result.data.errors);
+          }
+>>>>>>> c568b3d64582748b3d5ea199ea9b814d65d6e8f7
         })
         .catch(err => {
           this.isLoading = false;

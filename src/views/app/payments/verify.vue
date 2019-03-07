@@ -9,16 +9,17 @@
         <v-card-text>
           <v-text-field
             outline
-            name="lic_no"
+            name="case_no"
             label="Case Number/Reference No."
-            id="lic_no"
-            v-model="license.license_no"
+            id="case_no"
+            v-model="case_details.case_no"
           ></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" :loading="isLoading" @click.native="verifyLicense">Next</v-btn>
+          <!-- <v-btn color="primary" :loading="isLoading" @click.native="verifycase">Next</v-btn> -->
+          <v-btn color="primary" @click.native="verifyLicense">Next</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -66,7 +67,7 @@ export default {
   data() {
     return {
       step_curr: 1,
-      license: {},
+      case_details: {},
       isLoading: false,
       formData: null,
       items: [
@@ -110,8 +111,13 @@ export default {
     this.init();
   },
   methods: {
-    init() {},
-    verifyLicense() {
+    init() {
+      this.isLoading = true;
+      this.$store.dispatch("FIND_CASE").then(results => {
+        console.log("###########CASE_NO_RESULTS: " + JSON.stringify(results));
+      });
+    },
+    verifycase() {
       this.step_curr++;
     },
     verifyDetails() {
@@ -122,24 +128,50 @@ export default {
     },
     submit() {}
   },
-  search(){
-            this.isLoading = true;
-            this.$store.dispatch('FIND_CASE',this.case_no)
-            .then(result=>{
-                this.isLoading = false;
-                if(result.data.success){
-                    this.case_details = result.data.model;
-                }else{
-                    console.log(JSON.stringify(result.data))
-                   this.$notifyError(result.data.errors) 
-                }                
-            })
-            .catch(err=>{
-                this.isLoading = false;
-                console.log(err)
-                this.$notifyError(err)
-            })
-        },
+  verifyLicense() {
+    this.isLoading = true;
+    this.$store
+      .dispatch("FIND_LICENSE", this.case_details.case_no)
+      .then(result => {
+        this.isLoading = false;
+        if (result.data.success) {
+          this.case_details = result.data.model;
+          this.step_curr++;
+          this.$notify({
+            message: "License Details found."
+          });
+        } else {
+          this.$notify({
+            message: "License Number not found!"
+          });
+        }
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.$notifyError(err);
+      });
+  }
+  // next() {
+  //   console.log("###########FIND:case_no: " + JSON.stringify(this.case_no));
+  //   this.isLoading = true;
+  //   this.$store
+  //     .dispatch("FIND_CASE", this.case_no)
+  //     .then(result => {
+  //       console.log("###########CASE_NO: " + JSON.stringify(results));
+  //       this.isLoading = false;
+  //       if (result.data.success) {
+  //         this.case_details = result.data.model;
+  //       } else {
+  //         console.log(JSON.stringify(result.data));
+  //         this.$notifyError(result.data.errors);
+  //       }
+  //     })
+  //     .catch(err => {
+  //       this.isLoading = false;
+  //       console.log(err);
+  //       this.$notifyError(err);
+  //     });
+  // }
 };
 </script>
 
