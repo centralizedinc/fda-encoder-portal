@@ -29,26 +29,35 @@
           <span class="headline font-weight-thin">Review Payment Details</span>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item.title">
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-                <v-spacer></v-spacer>
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.value"></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
-        </v-card-actions>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Payments Details</span>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <span class="title">Application Type:</span>
+                  <v-card-text class="subheading">{{case_details.application_id}}</v-card-text>
+                  <span class="title">Case/Reference Number:</span>
+                  <v-card-text class="subheading">{{ case_details.case_no }}</v-card-text>
+                  <span class="title">Fee:</span>
+                  <v-card-text class="subheading">{{case_details.current_task}}</v-card-text>
+                  <span class="title">LRF:</span>
+                  <v-card-text class="subheading">{{case_details.encoder_group}}</v-card-text>
+                  <span class="title">Status:</span>
+                  <v-card-text class="subheading">{{case_details.status}}</v-card-text>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-card>
     </v-flex>
   </v-layout>
@@ -66,38 +75,10 @@ export default {
     return {
       page: 1,
       case_details: {},
+      case_no: {},
       isLoading: false,
       formData: null,
-      items: [
-        {
-          title: "Application Type:",
-          value: "New License"
-        },
-        {
-          title: "Case/Reference Number:",
-          value: "123avc121"
-        },
-        {
-          title: "Fee:",
-          value: "1000"
-        },
-        {
-          title: "LRF:",
-          value: "1000"
-        },
-        {
-          title: "Penalty:",
-          value: "1000"
-        },
-        {
-          title: "Total Amount:",
-          value: "1000"
-        },
-        {
-          title: "Status:",
-          value: "Paid"
-        }
-      ],
+      status: [{ value: "0", label: "Paid" }, { value: "1", label: "Not Paid" }],
       fab: [
         { label: "back", action: "back", icon: "arrow_back" },
         { label: "next", action: "next", icon: "arrow_forward" },
@@ -120,10 +101,10 @@ export default {
       this.$store
         .dispatch("FIND_CASE", this.case_details.case_no)
         .then(result => {
-          console.log("###########CASE_NO_RESULTS: " + JSON.stringify(case_no));
           this.isLoading = false;
+          console.log("###########CASE_NO_RESULTS: " + JSON.stringify(result));
           if (result.data.success) {
-            this.case_details = result.data.model.case_no;
+            this.case_details = result.data.model;
             this.page++;
             this.$notify({
               message: "Case Details found."
