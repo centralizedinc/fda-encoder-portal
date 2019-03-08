@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 pa-3>
-      <v-card v-if="step_curr === 1">
+      <v-card v-if="page === 1">
         <v-toolbar dark color="primary">
           <span class="headline font-weight-thin">Verify Payment Details</span>
         </v-toolbar>
@@ -19,36 +19,45 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <!-- <v-btn color="primary" :loading="isLoading" @click.native="verifycase">Next</v-btn> -->
-          <v-btn color="primary" @click.native="verifyLicense">Next</v-btn>
+          <v-btn color="primary" @click.native="verifycase">Next</v-btn>
         </v-card-actions>
       </v-card>
 
       <!-- Review Payment Details -->
-      <v-card v-if="step_curr === 2">
+      <v-card v-if="page === 2">
         <v-toolbar dark color="primary">
           <span class="headline font-weight-thin">Review Payment Details</span>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item.title">
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-                <v-spacer></v-spacer>
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.label"></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
-        </v-card-actions>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Payments Details</span>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <span class="title">Application Type:</span>
+                  <v-card-text class="subheading">{{case_details.application_id}}</v-card-text>
+                  <span class="title">Case/Reference Number:</span>
+                  <v-card-text class="subheading">{{ case_details.case_no }}</v-card-text>
+                  <span class="title">Fee:</span>
+                  <v-card-text class="subheading">{{case_details.current_task}}</v-card-text>
+                  <span class="title">LRF:</span>
+                  <v-card-text class="subheading">{{case_details.encoder_group}}</v-card-text>
+                  <span class="title">Status:</span>
+                  <v-card-text class="subheading">{{case_details.status}}</v-card-text>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-card>
     </v-flex>
   </v-layout>
@@ -56,50 +65,20 @@
 
 <script>
 import FabButtons from "@/components/FabButtons";
-import Uploader from "@/components/Uploader";
 
 export default {
   components: {
-    Uploader,
     FabButtons
   },
 
   data() {
     return {
-      step_curr: 1,
+      page: 1,
       case_details: {},
+      case_no: {},
       isLoading: false,
       formData: null,
-      items: [
-        {
-          title: "Application Type:",
-          label: "New License"
-        },
-        {
-          title: "Case/Reference Number:",
-          label: "123avc121"
-        },
-        {
-          title: "Fee:",
-          label: "1000"
-        },
-        {
-          title: "LRF:",
-          label: "1000"
-        },
-        {
-          title: "Penalty:",
-          label: "1000"
-        },
-        {
-          title: "Total Amount:",
-          label: "1000"
-        },
-        {
-          title: "Status:",
-          label: "Paid"
-        }
-      ],
+      status: [{ value: "0", label: "Paid" }, { value: "1", label: "Not Paid" }],
       fab: [
         { label: "back", action: "back", icon: "arrow_back" },
         { label: "next", action: "next", icon: "arrow_forward" },
@@ -118,60 +97,34 @@ export default {
       });
     },
     verifycase() {
-      this.step_curr++;
+      this.isLoading = true;
+      this.$store
+        .dispatch("FIND_CASE", this.case_details.case_no)
+        .then(result => {
+          this.isLoading = false;
+          console.log("###########CASE_NO_RESULTS: " + JSON.stringify(result));
+          if (result.data.success) {
+            this.case_details = result.data.model;
+            this.page++;
+            this.$notify({
+              message: "Case Details found."
+            });
+          } else {
+            this.$notify({
+              message: "Case Number not found!"
+            });
+          }
+        })
+        .catch(err => {
+          this.isLoading = false;
+          this.$notifyError(err);
+        });
     },
     verifyDetails() {
-      this.step_curr++;
-    },
-    upload(data) {
-      this.formData = data;
+      this.page++;
     },
     submit() {}
-  },
-  verifyLicense() {
-    this.isLoading = true;
-    this.$store
-      .dispatch("FIND_LICENSE", this.case_details.case_no)
-      .then(result => {
-        this.isLoading = false;
-        if (result.data.success) {
-          this.case_details = result.data.model;
-          this.step_curr++;
-          this.$notify({
-            message: "License Details found."
-          });
-        } else {
-          this.$notify({
-            message: "License Number not found!"
-          });
-        }
-      })
-      .catch(err => {
-        this.isLoading = false;
-        this.$notifyError(err);
-      });
   }
-  // next() {
-  //   console.log("###########FIND:case_no: " + JSON.stringify(this.case_no));
-  //   this.isLoading = true;
-  //   this.$store
-  //     .dispatch("FIND_CASE", this.case_no)
-  //     .then(result => {
-  //       console.log("###########CASE_NO: " + JSON.stringify(results));
-  //       this.isLoading = false;
-  //       if (result.data.success) {
-  //         this.case_details = result.data.model;
-  //       } else {
-  //         console.log(JSON.stringify(result.data));
-  //         this.$notifyError(result.data.errors);
-  //       }
-  //     })
-  //     .catch(err => {
-  //       this.isLoading = false;
-  //       console.log(err);
-  //       this.$notifyError(err);
-  //     });
-  // }
 };
 </script>
 

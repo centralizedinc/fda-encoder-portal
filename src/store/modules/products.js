@@ -34,34 +34,51 @@ const mutations = {
 var actions = {
 
     GET_ALL_PRODUCT_REFERENCE(context){
-        var prodAPI = new ProductApi(context.rootState.user_session.token);
-        var reference = {}
-        return new Promise((resolve, reject) => {            
-            prodAPI.productType()
-            .then(products=>{
-                reference.products = products.data.model;
-                context.commit('SET_PRODUCT_TYPE', products.data.model)
-                return prodAPI.getAllPrimary();
+        
+        if(context.state.productType 
+                && context.state.primaryActivity
+                && context.state.additional
+                && context.state.declared){
+            console.log('returning reference...')
+            return new Promise((resolve, reject)=>{
+                resolve({
+                        products:context.state.productType,
+                        primary:context.state.primaryActivity,
+                        additional:context.state.additional,
+                        declared:context.state.declared
+                    })
             })
-            .then(primary=>{
-                reference.primary = primary.data.model;
-                context.commit('SET_PRIMARY_ACTIVITY', primary.data.model)
-                return prodAPI.getAllAdditional();
+        }else{ 
+            console.log('getting reference ...') 
+            var prodAPI = new ProductApi(context.rootState.user_session.token);
+            var reference = {}      
+            return new Promise((resolve, reject) => {            
+                prodAPI.productType()
+                .then(products=>{
+                    reference.products = products.data.model;
+                    context.commit('SET_PRODUCT_TYPE', products.data.model)
+                    return prodAPI.getAllPrimary();
+                })
+                .then(primary=>{
+                    reference.primary = primary.data.model;
+                    context.commit('SET_PRIMARY_ACTIVITY', primary.data.model)
+                    return prodAPI.getAllAdditional();
+                })
+                .then(additional=>{
+                    reference.additional = additional.data.model;
+                    context.commit('SET_ADDITIONAL', additional.data.model)
+                    return prodAPI.getAllDeclared();
+                })
+                .then(declared=>{
+                    reference.declared = declared.data.model;
+                    context.commit('SET_DECLARED', declared.data.model)
+                    resolve(reference)
+                })
+                .catch(err =>{
+                    reject(err)
+                })
             })
-            .then(additional=>{
-                reference.additional = additional.data.model;
-                context.commit('SET_ADDITIONAL', additional.data.model)
-                return prodAPI.getAllDeclared();
-            })
-            .then(declared=>{
-                reference.declared = declared.data.model;
-                context.commit('SET_DECLARED', declared.data.model)
-                resolve(reference)
-            })
-            .catch(err =>{
-                reject(err)
-            })
-        })
+        }
     },
 
     GET_PRODUCT_TYPE(context) {

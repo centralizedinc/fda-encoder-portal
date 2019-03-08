@@ -4,10 +4,6 @@
                 <span class="headline font-weight-light primary--text">
                 Authorized Officer                      
             </span>
-            <!-- <v-spacer></v-spacer>
-            <v-btn fab icon color="primary" disabled>
-                <v-icon>edit</v-icon>
-            </v-btn> -->
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
@@ -84,28 +80,30 @@
                     ></v-text-field>                      
                 </v-flex>
                 <v-flex xs12 md4 pa-1>
+                    
+
                     <v-text-field
-                    outline
+                        outline
                         label="Expiry Date"
                         v-model="license.auth_officer.id_expiry"
                         append-icon="event"                                
-                        @click:append="dialogValue=true"
+                        @click:append="date_picker=true"
 
                     ></v-text-field>
                 <v-dialog
                     ref="dialogRef"
                     persistent
-                    v-model="dialogValue"
+                    v-model="date_picker"
                     lazy
                     full-width
                     width="290px"
-                    :return-value.sync="date"
+                    :return-value.sync="license.auth_officer.id_expiry"
                 >
                     
                     <v-date-picker v-model="license.auth_officer.id_expiry" scrollable>
                         <v-spacer></v-spacer>
-                        <v-btn flat color="primary" @click="dialogValue = false">Cancel</v-btn>
-                        <v-btn flat color="primary" @click="$refs.dialogRef.save(date)">OK</v-btn>
+                        <v-btn flat color="primary" @click="date_picker = false">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="$refs.dialogRef.save(license.auth_officer.id_expiry)">OK</v-btn>
                     </v-date-picker>
                 </v-dialog>
                 </v-flex>
@@ -168,7 +166,8 @@ export default {
     license: { required: true }
   },
   data() {
-    return {
+    return {    
+      date_picker:false,
       regions: [],
       provinces: [],
       cities: [],
