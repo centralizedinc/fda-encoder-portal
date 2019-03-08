@@ -39,7 +39,9 @@
               <v-layout wrap>
                 <v-flex xs12>
                   <span class="title">Application Type:</span>
-                  <v-card-text class="subheading">{{case_details.application_id}}</v-card-text>
+                  <v-card-text
+                    class="subheading"
+                  >{{getApplicationTypeName(case_details.application_id)}}</v-card-text>
                   <span class="title">Case/Reference Number:</span>
                   <v-card-text class="subheading">{{ case_details.case_no }}</v-card-text>
                   <span class="title">Fee:</span>
@@ -47,7 +49,7 @@
                   <span class="title">LRF:</span>
                   <v-card-text class="subheading">{{case_details.encoder_group}}</v-card-text>
                   <span class="title">Status:</span>
-                  <v-card-text class="subheading">{{case_details.status}}</v-card-text>
+                  <v-card-text class="subheading">{{getStatus(case_details.status)}}</v-card-text>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -55,7 +57,7 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
+            <v-btn color="primary" @click.native="close" :loading="isLoading">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-card>
@@ -78,7 +80,10 @@ export default {
       case_no: {},
       isLoading: false,
       formData: null,
-      status: [{ value: "0", label: "Paid" }, { value: "1", label: "Not Paid" }],
+      status: [
+        { value: "0", label: "Paid" },
+        { value: "1", label: "Not Paid" }
+      ],
       fab: [
         { label: "back", action: "back", icon: "arrow_back" },
         { label: "next", action: "next", icon: "arrow_forward" },
@@ -120,10 +125,12 @@ export default {
           this.$notifyError(err);
         });
     },
-    verifyDetails() {
-      this.page++;
-    },
-    submit() {}
+    // verifyDetails() {
+    //   this.page++;
+    // },
+    close() {
+      this.$router.push("/app");
+    }
   }
 };
 </script>

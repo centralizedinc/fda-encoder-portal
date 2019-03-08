@@ -11,6 +11,13 @@ export default {
             return "Variation";
           }
         },
+        getStatus(type) {
+          if (type === 0) {
+            return "Paid";
+          } else if (type === 2) {
+            return "Not Paid";
+          }
+        },
         getTask(task_id) {
           if (this.$store.state.tasks.tasks) {
             var task = this.$store.state.tasks.tasks.find(x => {
