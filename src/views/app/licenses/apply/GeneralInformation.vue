@@ -58,16 +58,6 @@
                         <v-checkbox color="primary" v-model="license.general_info.addtl_activity" small class="caption" :label="act.name" :value="act._id"></v-checkbox>
                     </v-flex>
                 </v-layout>
-                <!-- <v-list-tile avatar>                            
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                </v-list-tile>
-                <v-list-tile avatar>                            
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                    <v-checkbox small class="caption" label="Importer of Raw Materials" v-model="value" value="value"></v-checkbox>
-                </v-list-tile> -->
             </v-list>            
         </v-card-text>
     </div>
@@ -95,7 +85,6 @@ export default {
     created(){
         this.$store.dispatch('GET_ALL_PRODUCT_REFERENCE')
         .then(reference=>{
-            console.log('REF: '+JSON.stringify(reference))
             this.product_types = reference.products
             this.primary_activities = reference.primary
             this.declared_capitals = reference.declared
