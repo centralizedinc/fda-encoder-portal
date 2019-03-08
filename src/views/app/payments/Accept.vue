@@ -62,7 +62,7 @@
         <v-flex xs12 sm10 offset-sm1>
           <v-data-table :headers="headers" :items="transactions" class="elevation-1">
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.transaction }}</td>
+              <td>{{ props.item.case_details.application_id}}</td>
               <td>{{ props.item.details }}</td>
             </template>
           </v-data-table>
@@ -70,7 +70,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Next</v-btn>
+          <v-btn color="primary" @click.native="viewpay" :loading="isLoading">Next</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -98,7 +98,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="submit">Proceed to Payment</v-btn>
+          <v-btn color="primary" @click="payment">Proceed to Payment</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -129,46 +129,18 @@ export default {
       ],
       headers: [
         {
-          text: "Application Type",
+          text: "Transaction",
           value: "transaction"
         },
         {
-          text: "Case/Reference Number",
+          text: "Details",
           value: "details"
         }
       ],
-      transactions: [
-        {
-          transaction: "New License",
-          details: "123ABC121"
-        },
-        {
-          transaction: "Certifictae",
-          details: "ABC3214"
-        }
-      ],
-      items: [
-        {
-          title: "Fee:",
-          label: "1000"
-        },
-        {
-          title: "LRF:",
-          label: "1000"
-        },
-        {
-          title: "Penalty:",
-          label: "1000"
-        },
-        {
-          title: "Total Amount:",
-          label: "1000"
-        },
-        {
-          title: "Status:",
-          label: "Paid"
-        }
-      ]
+
+      //
+      rates: [],
+      items: []
     };
   },
   case_details: {},
@@ -185,7 +157,6 @@ export default {
     upload(data) {
       this.formData = data;
     },
-<<<<<<< HEAD
     // submit() {
     //   this.step_curr++;
     // }
@@ -196,6 +167,7 @@ export default {
         .then(result => {
           this.isLoading = false;
           console.log("############### FIND CASE" + JSON.stringify(result));
+          this.step_curr++;
           
           if (result.data.success) {
             console.log( "##### GROUP " +
@@ -203,43 +175,70 @@ export default {
                  result.data.model.encoder_group
               )
             );
-            this.case_details = {
-              encoder_group:result.data.model.encoder_group,
-              application_type:result.data.model.application_type
-            };
-          } else {
+            this.case_details = this.result
+          } 
+        else {
             console.log(JSON.stringify(result));
             this.$notifyError(result.data.errors);
           }
-
-          return this.$store.dispatch("FIND_ENCODED_CASE", this.case_details);
-        })
-        .then(result => {
-          console.log("####### LAST RESULT ######" + JSON.stringify(result));
-          this.step_curr++;
-=======
-    submit() {
-      this.step_curr++;
-    },
-    search() {
-      this.isLoading = true;
-      this.$store
-        .dispatch("FIND_ENCODED_CASE", this.case_no)
-        .then(result => {
-          this.isLoading = false;
-          if (result.data.success) {
-            this.case_details = result.data.model;
-          } else {
-            console.log(JSON.stringify(result.data));
-            this.$notifyError(result.data.errors);
-          }
->>>>>>> c568b3d64582748b3d5ea199ea9b814d65d6e8f7
-        })
+          })
+//
+        //   return this.$store.dispatch("RETRIEVE_RATES", this.case_details);
+        // })
+        // .then(result => {
+        //   console.log("####### LAST RESULT ######" + JSON.stringify(result));
+        //   this.rates = this.result
+        // })
         .catch(err => {
           this.isLoading = false;
           console.log(err);
           this.$notifyError(err);
         });
+    },
+    viewpay() {
+      this.isLoading = true;
+      this.$store
+        .dispatch("RETRIEVE_RATES", this.case_details)
+        .then(result => {
+          this.isLoading = false;
+          console.log("############### RETRIEVE RATES" + JSON.stringify(result));
+          this.step_curr++;
+          if (result.data.success) {
+            console.log( "##### GROUP " +
+              JSON.stringify(
+                 result.data.model.encoder_group
+              )
+            );
+            this.case_details = this.result
+          } 
+        else {
+            console.log(JSON.stringify(result));
+            this.$notifyError(result.data.errors);
+          }
+          })
+    },
+    //
+    payment() {
+      this.isLoading = true;
+        // this.$store
+        // .dispatch("RETRIEVE_RATES", this.case_details)
+        // .then(result => {
+        //   this.isLoading = false;
+        //   console.log("############### RETRIEVE RATES" + JSON.stringify(result));
+        //   this.step_curr++;
+        //   if (result.data.success) {
+        //     console.log( "##### GROUP " +
+        //       JSON.stringify(
+        //          result.data.model.encoder_group
+        //       )
+        //     );
+        //     this.case_details = this.result
+        //   } 
+        // else {
+        //     console.log(JSON.stringify(result));
+        //     this.$notifyError(result.data.errors);
+        //   }
+        //   })
     }
   }
 };
