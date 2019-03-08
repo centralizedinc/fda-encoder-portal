@@ -1,123 +1,84 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 pa-3>
-      <v-card v-if="step_curr === 1">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Verify Payment Details</span>
-        </v-card-title>
+      <v-card v-if="page === 1">
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-thin">Verify Payment Details</span>
+        </v-toolbar>
         <v-divider></v-divider>
         <v-card-text>
           <v-text-field
             outline
-            name="lic_no"
+            name="case_no"
             label="Case Number/Reference No."
-            id="lic_no"
-            v-model="license.license_no"
+            id="case_no"
+            v-model="case_details.case_no"
           ></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" :loading="isLoading" @click.native="verifyLicense">Next</v-btn>
+          <!-- <v-btn color="primary" :loading="isLoading" @click.native="verifycase">Next</v-btn> -->
+          <v-btn color="primary" @click.native="verifycase">Next</v-btn>
         </v-card-actions>
       </v-card>
 
-      <!-- Lincense Details -->
-      <v-card v-if="step_curr === 2">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Review Payment Details</span>
-        </v-card-title>
+      <!-- Review Payment Details -->
+      <v-card v-if="page === 2">
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-thin">Review Payment Details</span>
+        </v-toolbar>
         <v-divider></v-divider>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item.title">
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.label"></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
-        </v-card-actions>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Payments Details</span>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <span class="title">Application Type:</span>
+                  <v-card-text class="subheading">{{case_details.application_id}}</v-card-text>
+                  <span class="title">Case/Reference Number:</span>
+                  <v-card-text class="subheading">{{ case_details.case_no }}</v-card-text>
+                  <span class="title">Fee:</span>
+                  <v-card-text class="subheading">{{case_details.current_task}}</v-card-text>
+                  <span class="title">LRF:</span>
+                  <v-card-text class="subheading">{{case_details.encoder_group}}</v-card-text>
+                  <span class="title">Status:</span>
+                  <v-card-text class="subheading">{{case_details.status}}</v-card-text>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.native="verifyDetails" :loading="isLoading">Close</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-card>
-
-      <!-- Scanned Upload -->
-      <!-- <v-card v-if="step_curr === 3">
-        <v-card-title primary-title>
-          <span class="headline font-weight-thin primary--text">Test Validate</span>
-        </v-card-title>
-       <v-divider></v-divider>
-        <v-card-title primary-title>
-          <span class="title font-weight-thin primary--text">Test Validate display</span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="submit">Close</v-btn>
-        </v-card-actions>
-      </v-card>-->
-      <!-- <cashier v-if="step_curr === 4"></cashier> -->
     </v-flex>
-    <!-- <fab-buttons :buttons="fab" @submit="submit"></fab-buttons> -->
   </v-layout>
 </template>
 
 <script>
 import FabButtons from "@/components/FabButtons";
-import Uploader from "@/components/Uploader";
-// import Cashier from "@/views/app/payments/Cashier";
 
 export default {
   components: {
-    Uploader,
-    // Cashier,
     FabButtons
   },
 
   data() {
     return {
-      step_curr: 1,
-      license: {},
+      page: 1,
+      case_details: {},
+      case_no: {},
       isLoading: false,
       formData: null,
-      items: [
-        {
-          title: "Application Type:",
-          label: "New License"
-        },
-        {
-          title: "Case Number:",
-          label: "123avc121"
-        },
-        {
-          title: "Fee:",
-          label: "1000"
-        },
-        {
-          title: "LRF:",
-          label: "1000"
-        },
-        {
-          title: "Penalty:",
-          label: "1000"
-        },
-        {
-          title: "Total Amount:",
-          label: "1000"
-        },
-        {
-          title: "Mode of Payment:",
-          label: "1000"
-        }
-      ],
+      status: [{ value: "0", label: "Paid" }, { value: "1", label: "Not Paid" }],
       fab: [
         { label: "back", action: "back", icon: "arrow_back" },
         { label: "next", action: "next", icon: "arrow_forward" },
@@ -129,15 +90,38 @@ export default {
     this.init();
   },
   methods: {
-    init() {},
-    verifyLicense() {
-      this.step_curr++;
+    init() {
+      this.isLoading = true;
+      this.$store.dispatch("FIND_CASE").then(results => {
+        console.log("###########CASE_NO_RESULTS: " + JSON.stringify(results));
+      });
+    },
+    verifycase() {
+      this.isLoading = true;
+      this.$store
+        .dispatch("FIND_CASE", this.case_details.case_no)
+        .then(result => {
+          this.isLoading = false;
+          console.log("###########CASE_NO_RESULTS: " + JSON.stringify(result));
+          if (result.data.success) {
+            this.case_details = result.data.model;
+            this.page++;
+            this.$notify({
+              message: "Case Details found."
+            });
+          } else {
+            this.$notify({
+              message: "Case Number not found!"
+            });
+          }
+        })
+        .catch(err => {
+          this.isLoading = false;
+          this.$notifyError(err);
+        });
     },
     verifyDetails() {
-      this.step_curr++;
-    },
-    upload(data) {
-      this.formData = data;
+      this.page++;
     },
     submit() {}
   }

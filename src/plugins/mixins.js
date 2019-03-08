@@ -129,6 +129,13 @@ export default {
             }
           }
         },
+        getstats(status) {
+          if (status === "0") {
+              return "Paid";
+          } else if (status === "1") {
+              return "Not Paid";
+          }
+      },
         getApplicationTypeName(id) {
           if (id === "0") {
             return "Initial";
