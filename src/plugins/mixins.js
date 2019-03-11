@@ -11,6 +11,13 @@ export default {
             return "Variation";
           }
         },
+        getStatus(type) {
+          if (type === 0) {
+            return "Paid";
+          } else if (type === 2) {
+            return "Not Paid";
+          }
+        },
         getTask(task_id) {
           if (this.$store.state.tasks.tasks) {
             var task = this.$store.state.tasks.tasks.find(x => {
@@ -129,13 +136,6 @@ export default {
             }
           }
         },
-        getstats(status) {
-          if (status === "0") {
-              return "Paid";
-          } else if (status === "1") {
-              return "Not Paid";
-          }
-      },
         getApplicationTypeName(id) {
           if (id === "0") {
             return "Initial";

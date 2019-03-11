@@ -10,7 +10,10 @@
     "build-pcf": "vue-cli-service build --mode pcf",
     "build": "build-heroku",
     "dev": "npm run serve-heroku",
-    "start": "node server.js"
+    "start": "node server.js",
+    "pre-deploy": "rm -r app && mkdir app && cp -R dist app/dist && cp -R node_modules app/node_modules && cp package.json app && cp server.js app && cd app",
+    "deploy-pcf": "npm run build-pcf && npm run pre-deploy && cf push fda-encoder-portal -m 128M -k 128M",
+    "test": "mocha --timeout 10000"
   },
   "heroku-run-build-script": true,
   "dependencies": {
@@ -42,6 +45,9 @@
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-template-compiler": "^2.5.22",
-    "vuetify-loader": "^1.1.1"
+    "vuetify-loader": "^1.1.1",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
   }
 }
