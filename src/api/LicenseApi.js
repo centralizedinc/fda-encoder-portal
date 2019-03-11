@@ -12,7 +12,7 @@ export default class LicenseAPI {
     // getLicenses(cb) {
     //     axios.get('lto-api/').then((result) => {
     //         console.log('get licenses: ' + JSON.stringify(result));
-            
+
     //         if (result.data.success) {
     //             cb(result.data.model)
     //         } else {
@@ -37,39 +37,39 @@ export default class LicenseAPI {
     saveLicenses(data) {
         var saved_license = {};
         var lic_case = {}
-        var url = data.initial?'lto-api/encoded': 'lto-api/encoded/renew';
-        return new Promise((resolve, reject)=>{
+        var url = data.initial ? 'lto-api/encoded' : 'lto-api/encoded/renew';
+        return new Promise((resolve, reject) => {
             axios.post(url, data.license)
-            .then(result1=>{
-                console.log("RESULT SAVING LICENSE: " + JSON.stringify(result1.data))
-                if(result1.data.success){
-                    lic_case = result1.data;
-                    saved_license = result1.data.model.license;
-                    return axios.post('documents/uploads?account_id=' + saved_license.case_no, data.upload)
-                }else{
-                    resolve(result1.data)
-                }            
-            })
-            .then(result2=>{
-                console.log("RESULT UPLOADING FILES: " + JSON.stringify(result2.data))
-                var files = result2.data.model
-                saved_license.uploaded_files = files;
-                if(result2.data.success){
-                    return axios.post('lto-api/'+ saved_license._id, saved_license)
-                }else{
-                    resolve(result2.data)
-                }
-                
-            })
-            .then(result3=>{
-                console.log("RESULT UPDATING LICENSE: " + JSON.stringify(result3.data)) 
-                lic_case.license = result3.data.model;    
-                resolve(lic_case)
-                
-            })
-            .catch(err=>{
-                reject(err)
-            })
+                .then(result1 => {
+                    console.log("RESULT SAVING LICENSE: " + JSON.stringify(result1.data))
+                    if (result1.data.success) {
+                        lic_case = result1.data;
+                        saved_license = result1.data.model.license;
+                        return axios.post('documents/uploads?account_id=' + saved_license.case_no, data.upload)
+                    } else {
+                        resolve(result1.data)
+                    }
+                })
+                .then(result2 => {
+                    console.log("RESULT UPLOADING FILES: " + JSON.stringify(result2.data))
+                    var files = result2.data.model
+                    saved_license.uploaded_files = files;
+                    if (result2.data.success) {
+                        return axios.post('lto-api/' + saved_license._id, saved_license)
+                    } else {
+                        resolve(result2.data)
+                    }
+
+                })
+                .then(result3 => {
+                    console.log("RESULT UPDATING LICENSE: " + JSON.stringify(result3.data))
+                    lic_case.license = result3.data.model;
+                    resolve(lic_case)
+
+                })
+                .catch(err => {
+                    reject(err)
+                })
         })
     }
 
@@ -79,11 +79,13 @@ export default class LicenseAPI {
      * @param {String} license_no 
      * @returns {Promise}
      */
-    findLicense(license_no){
-        return axios.get('lto-api/license_no/'+license_no)
+    findLicense(license_no) {
+        return axios.get('lto-api/license_no/' + license_no)
     }
 
-
+    findLicenseByID(license_id) {
+        return axios.get('lto-api/' + license_id)
+    }
 
     // modifyLicenses(licenses, cb) {
     //     console.log('actions save modify licenses: ' + JSON.stringify(licenses))

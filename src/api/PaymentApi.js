@@ -75,8 +75,8 @@ export default class PaymentAPI {
                         status:0,
                         remarks: payment.transaction_details.order_payment.remarks
                     }
-                    console.log('DETAILS: '+JSON.stringify(details))
-                    return axios.post('lto-api/case/evaluate', details)
+                    console.log('DETAILS ###: '+JSON.stringify(details))
+                    return axios.post('lto-api/case/', details)
                 }else{
                     resolve(result1.data)
                 }

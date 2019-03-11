@@ -75,11 +75,20 @@ var actions = {
     },
 
     RETRIEVE_RATES(context, app_details){
-        return new PaymentAPI(context.rootState.user_session.token)
-                    .retrieveRates(app_details)
+        return new Promise((resolve, reject) => {
+            new PaymentAPI(context.rootState.user_session.token)
+                    .retrieveRates(app_details).then((result) => {
+                        console.log('result :', result);
+                        resolve(result)
+                    }).catch((err) => {
+                        console.log('err :', err);
+                        reject(err)
+                    });
+        })
     },
 
     SUBMIT_PAYMENT(context, payment){
+        console.log('payment :', JSON.stringify(payment));
         return new PaymentAPI(context.rootState.user_session.token)
                     .submitPayment(payment);
     }
