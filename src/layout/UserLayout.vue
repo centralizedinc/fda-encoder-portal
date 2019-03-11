@@ -113,16 +113,18 @@
       </v-dialog>
     </v-container>
     <!-- </v-content> -->
-    <v-footer
-      app
-      dark
-      class="pa-1"
-      style="background: linear-gradient(5deg, #b5c25a 0%, #104b2a 100%)"
-    >
-      <span class="caption">Copyright © 2019 FDA All rights reserved.</span>
-      <v-spacer></v-spacer>
-      <span class="caption">Food And Drug Administration of the Philippines</span>
-    </v-footer>
+    <v-footer dark style="background: linear-gradient(45deg, #b5c25a 0%, #104b2a 100%)">
+        <v-layout row wrap>
+          <v-flex xs12 pl-2>
+             <span class="caption">Copyright © 2019 FDA All rights reserved.</span>        
+          </v-flex>
+          <v-flex xs12 pl-2>             
+            <span class="caption">version {{app_version}}</span>
+          </v-flex>
+        </v-layout>       
+        <v-spacer></v-spacer>
+          <span class="caption">Food And Drug Administration of the Philippines </span>                           
+      </v-footer>
   </v-app>
 </template>
 
@@ -176,6 +178,9 @@ export default {
   // computed
   //#########################
   computed: {
+    app_version(){
+      return process.env.VUE_APP_VERSION
+    },
     page_name() {
       return this.$route.name;
     },
