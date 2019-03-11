@@ -5,15 +5,15 @@ process.env.NODE_ENV = 'test';
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../app');
+let server = require('../server.js');
 let should = chai.should();
 
 chai.use(chaiHttp);
 
 describe('Test #1', () => {
-    it('it should GET Success Response', (done) => {
+    it('GET Success Response', (done) => {
       chai.request(server)
-          .get('/')
+          .get('/test')
           .end((err, res) => {
                 res.should.have.status(200);
             done();
