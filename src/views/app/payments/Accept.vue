@@ -20,10 +20,15 @@
           <v-stepper-content step="2"></v-stepper-content>
 
           <v-stepper-step :complete="step_curr > 3" step="3">
-            Payment
-            <small>Accept Payment</small>
+            Payment Details
+            <small>Verify Payment</small>
           </v-stepper-step>
           <v-stepper-content step="3"></v-stepper-content>
+        <v-stepper-step :complete="step_curr > 4" step="4">
+            Accept Payment
+            <small>Accept Payment</small>
+          </v-stepper-step>
+          <v-stepper-content step="4"></v-stepper-content>
         </v-stepper>
       </v-card>
     </v-flex>
@@ -50,56 +55,116 @@
       </v-card>
 
       <!-- Application Details -->
+      <!-- <v-card v-if="page === 2"> -->
       <v-card v-if="step_curr === 2">
         <v-toolbar dark color="primary">
-          <span class="headline font-weight-thin">Application Details</span>
+          <span class="headline font-weight-thin">Review Payment Details</span>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-card-title primary-title>
-          <span class="title font-weight-thin primary--text">Summary of payment</span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-flex xs12 sm10 offset-sm1>
-          <v-data-table :headers="headers" :items="transactions" class="elevation-1">
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.case_details.application_id}}</td>
-              <td>{{ props.item.details }}</td>
-            </template>
-          </v-data-table>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click.native="viewpay" :loading="isLoading">Next</v-btn>
-        </v-card-actions>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Payments Details</span>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <span class="title">Client:</span>
+                  <v-card-text class="subheading">{{case_details.client}}</v-card-text>
+                  <span class="title">Application Type:</span>
+                  <v-card-text class="subheading">{{case_details.application_id}}</v-card-text>
+                  <span class="title">Case/Reference Number:</span>
+                  <v-card-text class="subheading">{{ case_details.case_no }}</v-card-text>
+                  <span class="title">Group:</span>
+                  <v-card-text class="subheading">{{case_details.encoder_group}}</v-card-text>
+                  <span class="title">Case Type:</span>
+                  <v-card-text class="subheading">{{getAppType(case_details.case_type)}}</v-card-text>
+                  <span class="title">Status:</span>
+                  <v-card-text class="subheading">{{getActivityStatus(case_details.status)}}</v-card-text>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click.native="viewpay">Next</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-card>
-
-      <!-- payment -->
       <v-card v-if="step_curr === 3">
         <v-toolbar dark color="primary">
-          <span class="headline font-weight-thin">Payments</span>
+          <span class="headline font-weight-thin">Review Payment Details</span>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-list>
-              <v-list-tile v-for="item in items" :key="item.title">
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                </v-list-tile-content>
-                <v-spacer></v-spacer>
-                <v-list-tile-content>
-                  <v-list-tile-title v-text="item.label"></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Payments Details</span>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <span class="title">Application Fee:</span>
+                  <v-card-text class="subheading">{{rate.fee}}</v-card-text>
+                  <span class="title">LRF:</span>
+                  <v-card-text class="subheading">{{rate.lrf}}</v-card-text>
+                  <span class="title">Interest:</span>
+                  <v-card-text class="subheading">{{rate.interest}}</v-card-text>
+                  <span class="title">Surcharge:</span>
+                  <v-card-text class="subheading">{{rate.surcharge}}</v-card-text>
+                  <span class="title">Others:</span>
+                  <v-card-text class="subheading">{{rate.others}}</v-card-text>
+                  <span class="title">Total:</span>
+                  <v-card-text class="subheading">{{rate.total}}</v-card-text>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <!-- <v-btn color="primary" @click.native="payment" :loading="isLoading">Close</v-btn> -->
+            <v-btn color="primary" @click="next">Proceed to Payment</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-card>
+<!-- payment -->
+<v-card v-if="step_curr === 4">
+        <v-toolbar dark color="primary">
+          <span class="headline font-weight-thin">Payment</span>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card>
+          <v-card-title primary-title class="headline">
+            <span class="headline">Cashier</span>
+          </v-card-title>
+      <v-divider></v-divider>
+        <v-card-text>
+          <v-text-field
+            outline
+            name="pay"
+            label="Payment"
+            id="pay"
+            v-model="amount_paid"
+          ></v-text-field>
+        </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="payment">Proceed to Payment</v-btn>
+          <v-btn color="primary" :loading="isLoading" @click="payments">Pay</v-btn>
         </v-card-actions>
+
+          <!-- </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions> -->
+            <!-- <v-spacer></v-spacer> -->
+            <!-- <v-btn color="primary" @click.native="payment" :loading="isLoading">Close</v-btn> -->
+            <!-- <v-btn color="primary" @click="payment">Proceed to Payment</v-btn> -->
+          <!-- </v-card-actions> -->
+        </v-card>
       </v-card>
     </v-flex>
   </v-layout>
@@ -139,8 +204,11 @@ export default {
       ],
 
       //
-      rates: [],
-      items: []
+      rate: [],
+      items: [],
+      license_details: {},
+      amount_paid: 0,
+      payment: 0
     };
   },
   case_details: {},
@@ -167,28 +235,29 @@ export default {
         .then(result => {
           this.isLoading = false;
           console.log("############### FIND CASE" + JSON.stringify(result));
-          this.step_curr++;
-          
+
           if (result.data.success) {
-            console.log( "##### GROUP " +
-              JSON.stringify(
-                 result.data.model.encoder_group
-              )
+            console.log("##### GROUP " + JSON.stringify(result.data.model));
+            this.case_details = result.data.model;
+            console.log(
+              "##### case details" + JSON.stringify(this.case_details)
             );
-            this.case_details = this.result
-          } 
-        else {
-            console.log(JSON.stringify(result));
+
+            this.step_curr++;
+            console.log('this.case_details.application_id :', this.case_details.application_id);
+            return this.$store.dispatch("FIND_LICENSE_BY_ID", this.case_details.application_id)
+          } else {
+            console.log('result.data.errors :', result.data.errors);
             this.$notifyError(result.data.errors);
           }
-          })
-//
-        //   return this.$store.dispatch("RETRIEVE_RATES", this.case_details);
-        // })
-        // .then(result => {
-        //   console.log("####### LAST RESULT ######" + JSON.stringify(result));
-        //   this.rates = this.result
-        // })
+
+          // return this.$store.dispatch("RETRIEVE_RATES", this.case_details);
+        })
+        .then(result => {
+          console.log("####### LAST RESULT ######" + JSON.stringify(result));
+          this.license_details = result ? result.data.model : {};
+        })
+
         .catch(err => {
           this.isLoading = false;
           console.log(err);
@@ -198,48 +267,89 @@ export default {
     viewpay() {
       this.isLoading = true;
       this.$store
-        .dispatch("RETRIEVE_RATES", this.case_details)
+        .dispatch("RETRIEVE_RATES", {
+          appType: this.case_details.application_type,
+          productType: this.license_details.general_info.product_type,
+          primaryActivity: this.license_details.general_info.primary_activity,
+          declaredCapital: this.license_details.general_info.declared_capital
+        })
         .then(result => {
           this.isLoading = false;
-          console.log("############### RETRIEVE RATES" + JSON.stringify(result));
-          this.step_curr++;
+          console.log("############### FIND CASE" + JSON.stringify(result));
+
           if (result.data.success) {
-            console.log( "##### GROUP " +
-              JSON.stringify(
-                 result.data.model.encoder_group
-              )
-            );
-            this.case_details = this.result
-          } 
-        else {
+            console.log("##### GROUP " + JSON.stringify(result.data.model));
+            this.rate = result.data.model;
+            console.log("##### rates details" + JSON.stringify(this.rate));
+            this.step_curr++;
+          } else {
             console.log(JSON.stringify(result));
             this.$notifyError(result.data.errors);
           }
-          })
-    },
-    //
-    payment() {
-      this.isLoading = true;
-        // this.$store
-        // .dispatch("RETRIEVE_RATES", this.case_details)
+
+          // return this.$store.dispatch("RETRIEVE_RATES", this.case_details);
+        })
         // .then(result => {
-        //   this.isLoading = false;
-        //   console.log("############### RETRIEVE RATES" + JSON.stringify(result));
-        //   this.step_curr++;
-        //   if (result.data.success) {
-        //     console.log( "##### GROUP " +
-        //       JSON.stringify(
-        //          result.data.model.encoder_group
-        //       )
-        //     );
-        //     this.case_details = this.result
-        //   } 
-        // else {
-        //     console.log(JSON.stringify(result));
-        //     this.$notifyError(result.data.errors);
-        //   }
-        //   })
-    }
+        //   console.log("####### LAST RESULT ######" + JSON.stringify(result));
+        //   this.rates = this.result.data.model
+        // })
+
+        .catch(err => {
+          this.isLoading = false;
+          console.log(err);
+          this.$notifyError(err);
+        });
+    },
+
+    payments() {
+      var payment = {
+                payment_details:{
+                    total_amount:this.amount_paid,
+                    mode_of_payment:1
+                },
+                transaction_details:{
+                    application_type:this.case_details.application_type,
+                    application:this.case_details.application_id,
+                    case_no:this.case_details.case_no,
+                    case_id:this.case_details._id,
+                    order_payment:{
+                        fee:this.rate.fee,
+                        lrf:this.rate.lrf?this.rate.lrf:0,
+                        penalty:this.rate.penalty?this.rate.penalty:0,
+                        total_amount:this.rate.total?this.rate.total:0,
+                        remarks:this.remarks
+                    }
+                }
+            }
+      this.isLoading = true;
+      console.log('object :'+ JSON.stringify(payment));
+      this.$store
+      .dispatch("SUBMIT_PAYMENT", payment)
+      .then(result => {
+        this.isLoading = false;
+        console.log("############### SUBMIT PAYMENT" + JSON.stringify(result));
+        if (result.success) {
+         this.$notify({
+                        message:'Success! Payment Reference No:' + result.model.transaction_id,
+                        color:'primary'
+                        })
+        }else{
+                    this.$notifyError(result.errors)
+                }
+
+        })
+         .catch(err => {
+          this.isLoading = false;
+          console.log(err);
+          this.$notifyError(err);
+        });
+    },
+    next() {
+      this.step_curr++;
+    },
+    // back() {
+    //   this.step_curr--;
+    // }
   }
 };
 </script>
