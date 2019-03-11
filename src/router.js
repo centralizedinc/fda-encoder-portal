@@ -110,7 +110,7 @@ var router = new Router({
           component: () => import('@/views/app/licenses/Licenses.vue'), 
         },
         {
-          path: 'payments',
+          path: 'payments/cashier',
           name: 'Cashier',
           beforeEnter: isActiveSession,
           component: () => import('@/views/app/payments/Cashier.vue'), 
