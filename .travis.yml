@@ -9,3 +9,7 @@ deploy:
   app: fda-encoder-portal
   on:
     repo: centralizedinc/fda-encoder-portal
+notifications:
+  email:
+    - ariel.a.balita@gmail.com
+    - abalita@centralizedinc.com
