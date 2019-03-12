@@ -13,3 +13,5 @@ notifications:
   email:
     - ariel.a.balita@gmail.com
     - abalita@centralizedinc.com
+  on_success: always # default: change
+  on_failure: always # default: always
