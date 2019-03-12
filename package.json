@@ -1,6 +1,6 @@
 {
   "name": "fda-encoder-portal",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,7 +11,7 @@
     "build": "npm run build-heroku",
     "dev": "npm run serve-heroku",
     "start": "node server.js",
-    "clean":"if [ -d app]; then rm -r app; fi",
+    "clean": "if [ -d app]; then rm -r app; fi",
     "pre-deploy": "npm run clean && mkdir app && cp -R dist app/dist && cp -R node_modules app/node_modules && cp package.json app && cp server.js app && cd app",
     "deploy-pcf": "npm run build-pcf && npm run pre-deploy && cf push fda-encoder-portal -m 128M -k 128M",
     "test": "mocha --timeout 10000",
