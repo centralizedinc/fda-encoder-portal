@@ -15,7 +15,7 @@
     "pre-deploy": "npm run clean && mkdir app && cp -R dist app/dist && cp -R node_modules app/node_modules && cp package.json app && cp server.js app && cd app",
     "deploy-pcf": "npm run build-pcf && npm run pre-deploy && cf push fda-encoder-portal -m 128M -k 128M",
     "test": "mocha --timeout 10000",
-    "push": "git add . && git commit -m 'update'&& npm version patch && git push"
+    "push": "git add . && git commit -m 'update' && npm version patch && git push"
   },
   "heroku-run-build-script": true,
   "dependencies": {
