@@ -70,7 +70,7 @@
         <v-icon small>fas fa-indent</v-icon>
       </v-btn>
     </v-toolbar>
-    <!-- <v-content> -->
+    <v-content>
     <v-container fluid>
       <!-- <v-card class="mt-3 mx-auto">
       <v-layout row wrap ml-3>-->
@@ -112,7 +112,7 @@
         </v-card>
       </v-dialog>
     </v-container>
-    <!-- </v-content> -->
+    </v-content>
     <v-footer dark style="background: linear-gradient(45deg, #b5c25a 0%, #104b2a 100%)">
         <v-layout row wrap>
           <v-flex xs12 pl-2>

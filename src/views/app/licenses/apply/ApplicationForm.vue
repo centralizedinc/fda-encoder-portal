@@ -3,8 +3,8 @@
     <v-form @submit.prevent="submit">
       <v-flex xs12 pa-3>                          
             <v-card>
-                <general-information :license="license"></general-information>
-                <establishment-information :license="license"></establishment-information>
+                <general-information ref="generalInfo" :license="license"></general-information>
+                <establishment-information ref="estInfo" :license="license"></establishment-information>
                 <product-line :license="license"></product-line>
                 <office-address :license="license"></office-address>
                 <warehouse-address :license="license"></warehouse-address>  
@@ -86,20 +86,22 @@ export default {
       this.formData = formData;
     },
     submit() {
-      this.$store.dispatch('SAVE_LICENSE', {initial:true, license:this.license, upload: this.formData})
-      .then(result=>{
-        if(result.success){
-          this.$notify({message:'Sucess! CASE#: ' + result.model.case_details.case_no, color:'primary'})
-          this.$store.commit('SET_LICENSE', result.model)
-          this.$router.push('/app/payments');
-        }else{
-           this.$notifyError(result.errors)
-        }
-      })
-      .catch(err=>{
-        console.log('ERROR: '+ err)
-        this.$notifyError(err)        
-      })
+      this.$refs.generalInfo.validateForm()
+      this.$refs.estInfo.validateForm()
+      // this.$store.dispatch('SAVE_LICENSE', {initial:true, license:this.license, upload: this.formData})
+      // .then(result=>{
+      //   if(result.success){
+      //     this.$notify({message:'Sucess! CASE#: ' + result.model.case_details.case_no, color:'primary'})
+      //     this.$store.commit('SET_LICENSE', result.model)
+      //     this.$router.push('/app/payments');
+      //   }else{
+      //      this.$notifyError(result.errors)
+      //   }
+      // })
+      // .catch(err=>{
+      //   console.log('ERROR: '+ err)
+      //   this.$notifyError(err)        
+      // })
     }
   }
 };

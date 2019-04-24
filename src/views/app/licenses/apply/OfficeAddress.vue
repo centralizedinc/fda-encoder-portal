@@ -5,6 +5,9 @@
         </v-card-title> 
         <v-divider></v-divider>
         <v-card-text>
+            <v-form >
+                
+            </v-form>
             <v-layout row wrap>
                 <v-flex xs12 pa-1>
                     <v-textarea

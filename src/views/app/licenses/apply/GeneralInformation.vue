@@ -4,7 +4,8 @@
             <span class="headline font-weight-light primary--text">General Information</span>
         </v-card-title>
         <v-divider></v-divider>
-        <v-card-text>            
+        <v-card-text> 
+            <v-form ref="form" v-model="valid">                                       
             <v-layout row wrap>
                 <v-flex xs12 md3 pa-1>
                     <v-select 
@@ -15,6 +16,7 @@
                         item-value="value"
                         v-model="license.application_type"
                         label="Type of Application"
+                        :rules="[requiredRule]"
                     ></v-select>
                 </v-flex>                        
                 <v-flex xs12 md3 pa-1>
@@ -25,6 +27,7 @@
                         :items="product_types"
                         label="Product Type"
                         v-model="license.general_info.product_type"
+                        :rules="[requiredRule]"
             ></v-select>
                 </v-flex>
                 <v-flex xs12 md3 pa-1>
@@ -36,6 +39,7 @@
                         :items="filtered_primary"
                         label="Primary Activity"
                         v-model="license.general_info.primary_activity"
+                        :rules="[requiredRule]"
                     ></v-select>
                 </v-flex>
                 <v-flex xs12 md3 pa-1>
@@ -46,7 +50,7 @@
                         outline
                         :items="filtered_declared"
                         label="Declared Capital"
-                        v-model="license.general_info.declared_capital"
+                        v-model="license.general_info.declared_capital"                        
                     ></v-select>
                 </v-flex>
             </v-layout>                                    
@@ -58,7 +62,8 @@
                         <v-checkbox color="primary" v-model="license.general_info.addtl_activity" small class="caption" :label="act.name" :value="act._id"></v-checkbox>
                     </v-flex>
                 </v-layout>
-            </v-list>            
+            </v-list> 
+            </v-form>           
         </v-card-text>
     </div>
 </template>
@@ -70,6 +75,7 @@ export default {
     },
     data(){
         return{
+            valid:"true",
             application_type:[
                 {label:'Initial', value:'0'},
                 {label:'Variation', value:'1'},
@@ -93,6 +99,9 @@ export default {
         })
     },
     methods:{
+        validateForm(){
+            this.$refs.form.validate()
+        }
     },
     computed:{
         filtered_primary(){

@@ -7,8 +7,9 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
+            <v-form ref="form" v-model="valid">
             <v-layout row wrap>
-                <v-flex xs12 md4 pa-1>
+                <v-flex xs12 md4 pa-1>                                                            
                     <v-text-field
                             outline
                             name="est_name"
@@ -78,9 +79,10 @@
                         id="est_fax"
                         v-model="license.estab_details.fax"
                         mask="(##) ###-####"
-                    ></v-text-field>
-                </v-flex>                            
-            </v-layout>   
+                    ></v-text-field>                    
+                </v-flex>                                           
+            </v-layout>
+            </v-form>    
         </v-card-text>
     </div>
 </template>
@@ -93,7 +95,13 @@ export default {
     data(){
         return{
             //############ rules ###############
+            valid:true
 
+        }
+    },
+    methods:{
+        validateForm(){
+            this.$refs.form.validate()
         }
     }
 
